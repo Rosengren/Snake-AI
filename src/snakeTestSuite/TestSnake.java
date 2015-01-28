@@ -144,19 +144,10 @@ public class TestSnake {
 
         snake.setDirection(Direction.UP);
         snake.update();
-//        snake.update();
-        System.out.println(Arrays.toString(snake.getXCoordinates()) + " + " + Arrays.toString(snake.getYCoordinates()));
         snake.setDirection(Direction.LEFT);
         snake.update();
-        System.out.println(Arrays.toString(snake.getXCoordinates()) + " + " + Arrays.toString(snake.getYCoordinates()));
         snake.setDirection(Direction.DOWN);
         snake.update();
-        System.out.println(Arrays.toString(snake.getXCoordinates()) + " + " + Arrays.toString(snake.getYCoordinates()));
-        snake.update();
-        System.out.println(Arrays.toString(snake.getXCoordinates()) + " + " + Arrays.toString(snake.getYCoordinates()));
-        snake.update();
-        snake.update();
-
 
         assertTrue("Snake should have collided with itself.", snake.checkSnakeCollision());
     }

@@ -75,10 +75,14 @@ public class Snake {
     }
 
     public boolean checkSnakeCollision() {
+
         for (int i = xCoordinates.size() - 1; i > 0; i--) {
-            if ((i > 4) && (xCoordinates.get(0) == xCoordinates.get(i))
-                    && (yCoordinates.get(0) == yCoordinates.get(i)))
+
+            if ((xCoordinates.get(0).intValue() == xCoordinates.get(i).intValue())
+                    && (yCoordinates.get(0).intValue() == yCoordinates.get(i).intValue())) {
+
                 return true;
+            }
         }
 
         return false;

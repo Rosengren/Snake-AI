@@ -97,6 +97,7 @@ public class Model extends Observable {
                 snake.checkSnakeCollision()) {
             endGame();
         }
+
     }
 
     public void checkApple() {
