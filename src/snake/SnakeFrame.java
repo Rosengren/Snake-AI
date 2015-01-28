@@ -13,8 +13,8 @@ public class SnakeFrame extends JFrame {
     private View gamePanel;
 
     /** Constants **/
-    private final int WIDTH = 520;
-    private final int HEIGHT = 540;
+    private final int WIDTH = 320;
+    private final int HEIGHT = 340;
 
     public SnakeFrame() {
         gamePanel = new View();

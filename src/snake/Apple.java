@@ -10,9 +10,14 @@ public class Apple {
     private int xCoordinate;
     private int yCoordinate;
 
+    private int height;
+    private int width;
+
     public Apple(int size) {
         this.size = size;
         generateNewCoordinates();
+        height = -1;
+        width = -1;
     }
 
     public Apple() {
@@ -30,6 +35,11 @@ public class Apple {
         xCoordinate = r * size;
         r = (int) (Math.random() * SEED_VALUE);
         yCoordinate = r * size;
+
+        if (xCoordinate == 0 || xCoordinate == width ||
+                yCoordinate == 0 || yCoordinate == height) {
+            generateNewCoordinates();
+        }
     }
 
     public boolean checkCollision(int x, int y) {
@@ -50,5 +60,10 @@ public class Apple {
 
     public int getSize() {
         return size;
+    }
+
+    public void setPerimeter(int width, int height) {
+        this.height = height;
+        this.width = width;
     }
 }

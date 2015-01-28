@@ -17,8 +17,8 @@ public class View extends JPanel implements Observer {
     private static final long serialVersionUID = 1L;
 
     /** Constants **/
-    private final int WIDTH = 520;
-    private final int HEIGHT = 540;
+    private final int WIDTH = 320;
+    private final int HEIGHT = 340;
 
     private boolean inGame = false;
     private boolean pauseGame = false;

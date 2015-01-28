@@ -21,6 +21,7 @@ public class Controller implements ActionListener {
 
         keyPress = new TAdapter();
 
+
     }
 
     public KeyAdapter getKeyListener() {
@@ -31,6 +32,7 @@ public class Controller implements ActionListener {
         model.initGame();
         timer = new Timer(DELAY, this);
         timer.start();
+        model.update();
     }
 
     private class TAdapter extends KeyAdapter {
@@ -42,21 +44,26 @@ public class Controller implements ActionListener {
             switch(key) {
                 case KeyEvent.VK_UP:
                     model.moveSnake(Direction.UP);
+                    model.update();
                     break;
                 case KeyEvent.VK_DOWN:
                     model.moveSnake(Direction.DOWN);
+                    model.update();
                     break;
                 case KeyEvent.VK_LEFT:
                     model.moveSnake(Direction.LEFT);
+                    model.update();
                     break;
                 case KeyEvent.VK_RIGHT:
                     model.moveSnake(Direction.RIGHT);
+                    model.update();
                     break;
                 case KeyEvent.VK_ENTER:
                     model.restartGame();
                     break;
                 case KeyEvent.VK_SPACE:
                     model.exitGame();
+                    System.exit(0);
                     break;
                 case KeyEvent.VK_ESCAPE:
                     model.pauseGame();
@@ -71,7 +78,7 @@ public class Controller implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
-        model.update();
+        //model.update();
     }
 
 }

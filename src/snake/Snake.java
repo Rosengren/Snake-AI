@@ -116,6 +116,10 @@ public class Snake {
         return toIntegerArray(yCoordinates);
     }
 
+    public int[] getHeadCoordinates() {
+        return new int[] {xCoordinates.get(0), yCoordinates.get(0)};
+    }
+
     public int[] toIntegerArray(ArrayList<Integer> arr) {
 
         int[] result = new int[arr.size()];

@@ -8,8 +8,8 @@ public class Model extends Observable {
     private Board board;
 
     /** Constants **/
-    private final int BOARD_WIDTH = 500;
-    private final int BOARD_HEIGHT = 500;
+    private final int BOARD_WIDTH = 300;
+    private final int BOARD_HEIGHT = 300;
 
     private Snake snake;
     private Apple apple;
@@ -24,6 +24,7 @@ public class Model extends Observable {
         // initialize snake
         snake = new Snake();
         apple = new Apple();
+        apple.setPerimeter(BOARD_WIDTH, BOARD_HEIGHT);
         obstacles = new Obstacles();
         board = new Board(BOARD_WIDTH, BOARD_HEIGHT);
         endGame = false;
@@ -79,9 +80,9 @@ public class Model extends Observable {
     public void update() {
 
         if (inGame) {
+            snake.update();
             checkApple();
             checkCollision();
-            snake.update();
 
             // need to update view about:
             setChanged();
@@ -94,7 +95,7 @@ public class Model extends Observable {
     public void checkCollision() {
 
         if (snake.checkWallCollision(BOARD_WIDTH, BOARD_HEIGHT) ||
-                snake.checkSnakeCollision()) {
+                snake.checkSnakeCollision() || obstacles.checkCollision(snake.getHeadCoordinates())) {
             endGame();
         }
 

@@ -67,6 +67,19 @@ public class Obstacles {
         return true;
     }
 
+    public boolean checkCollision(int[] coordinate) {
+
+        if (coordinate.length < 2)
+            return false;
+
+        for (int i = 0; i < size; i++) {
+            if (xCoordinates[i] == coordinate[0] && yCoordinates[i] == coordinate[1])
+                return true;
+        }
+
+        return false;
+    }
+
     public int[] getXCoordinates() {
         return xCoordinates;
     }
