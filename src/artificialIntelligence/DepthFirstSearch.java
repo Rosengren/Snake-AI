@@ -1,11 +1,11 @@
 package artificialIntelligence;
 
-import snake.Direction;
+import snake.*;
 
 public class DepthFirstSearch implements AIStrategy {
 
     @Override
-    public Direction selectDirection() {
+    public Direction selectDirection(int[][] boardLayout) {
         return null;
     }
 }

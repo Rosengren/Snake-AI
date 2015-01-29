@@ -1,9 +1,9 @@
 package artificialIntelligence;
 
-import snake.Direction;
+import snake.*;
 
 interface AIStrategy {
 
-    public Direction selectDirection();
+    public Direction selectDirection(int[][] boardLayout);
 
 }

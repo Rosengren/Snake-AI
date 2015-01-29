@@ -1,15 +1,11 @@
 package artificialIntelligence;
 
-import snake.Direction;
+import snake.*;
 
 public class AstarTraversal implements AIStrategy {
 
-    public AstarTraversal() {
-
-    }
-
     @Override
-    public Direction selectDirection() {
+    public Direction selectDirection(int[][] boardLayout) {
         return null;
     }
 }

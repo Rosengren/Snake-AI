@@ -1,5 +1,6 @@
 package snake;
 
+import java.util.Arrays;
 import java.util.Observable;
 
 public class Model extends Observable {
@@ -126,5 +127,33 @@ public class Model extends Observable {
 
     public int getScore() {
         return score;
+    }
+
+    public int[][] getBoardLayout() {
+
+        int dotSize = snake.getDotSize();
+
+        int height = BOARD_HEIGHT / dotSize;
+        int width = BOARD_WIDTH / dotSize;
+
+        int[][] layout = new int[width][height];
+
+        int[] snakeCoordinates = snake.getHeadCoordinates();
+        int xSnake = snakeCoordinates[0] / dotSize;
+        int ySnake = snakeCoordinates[1] / dotSize;
+        layout[xSnake][ySnake] = 1;
+
+        int[] xObstacles = obstacles.getXCoordinates();
+        int[] yObstacles = obstacles.getYCoordinates();
+
+        for (int i = 0; i < obstacles.getSize(); i++) {
+            layout[xObstacles[i] / dotSize][yObstacles[i] / dotSize] = 2;
+        }
+
+        int xApple = apple.getXCoordinate() / dotSize;
+        int yApple = apple.getYCoordinate() / dotSize;
+
+        layout[xApple][yApple] = 3;
+        return layout;
     }
 }

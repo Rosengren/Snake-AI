@@ -134,4 +134,8 @@ public class Snake {
         return length;
     }
 
+    public int getDotSize() {
+        return DOT_SIZE;
+    }
+
 }
