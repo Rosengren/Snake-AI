@@ -3,9 +3,6 @@ package snake;
 public class Apple {
 
     private static final int SEED_VALUE = 29;
-    private static final int DEFAULT_APPLE_SIZE = 10;
-
-    private int size;
 
     private int xCoordinate;
     private int yCoordinate;
@@ -13,15 +10,10 @@ public class Apple {
     private int height;
     private int width;
 
-    public Apple(int size) {
-        this.size = size;
+    public Apple() {
         generateNewCoordinates();
         height = -1;
         width = -1;
-    }
-
-    public Apple() {
-        this(DEFAULT_APPLE_SIZE);
     }
 
     public void setCoordinates(int x, int y) {
@@ -41,7 +33,7 @@ public class Apple {
 
 
     private int generateCoordinate() {
-        return (int) (Math.random() * SEED_VALUE) * size;
+        return (int) (Math.random() * SEED_VALUE);
     }
 
 
@@ -70,13 +62,12 @@ public class Apple {
     }
 
 
-    public int getSize() {
-        return size;
-    }
-
-
     public void setPerimeter(int width, int height) {
         this.height = height;
         this.width = width;
+    }
+
+    public int[] getPerimeter() {
+        return new int[] {width, height};
     }
 }

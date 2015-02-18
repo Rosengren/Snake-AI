@@ -6,14 +6,14 @@ public class SnakeGame {
     public SnakeGame() {
 
         SnakeFrame frame = new SnakeFrame();
-        View view = new View();
+//        View view = new View();
 
         Model model = new Model();
         Controller controller = new Controller(model);
 
-        model.addObserver(frame.getView());
+//        model.addObserver(frame.getView());
         frame.addController(controller.getKeyListener());
-        frame.addPanel(view);
+//        frame.addPanel(view);
         controller.initGame();
 
     }

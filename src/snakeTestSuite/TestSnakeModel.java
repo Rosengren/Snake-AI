@@ -9,7 +9,6 @@ import snake.Model;
 public class TestSnakeModel {
 
     private static final int DEFAULT_SNAKE_SIZE = 5;
-    private static final int DEFAULT_APPLE_SIZE = 10;
     private static final int DEFAULT_BOARD_WIDTH = 300;
     private static final int DEFAULT_BOARD_HEIGHT = 300;
 
@@ -31,10 +30,6 @@ public class TestSnakeModel {
         assertEquals("Default board height should be " + DEFAULT_BOARD_HEIGHT + ".", DEFAULT_BOARD_HEIGHT, game.getBoard().getHeight());
     }
 
-    @Test
-    public void testInitialAppleSize() {
-        assertEquals("Default apple size should be " + DEFAULT_APPLE_SIZE + ".", DEFAULT_APPLE_SIZE, game.getApple().getSize());
-    }
 
     @After
     public void tearDown() {

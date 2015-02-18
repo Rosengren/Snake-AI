@@ -10,11 +10,12 @@ import snake.Apple;
 
 public class TestApple {
 
-    private static final int DEFAULT_APPLE_SIZE = 10;
-    private static final int CUSTOM_APPLE_SIZE = 20;
-
     private static final int X_COORDINATE = 10;
     private static final int Y_COORDINATE = 10;
+
+    private static final int DEFAULT_PERIMETER_HEIGHT = -1;
+    private static final int DEFAULT_PERIMETER_WIDTH = -1;
+
 
     private Apple apple;
 
@@ -27,10 +28,10 @@ public class TestApple {
     public void testConstructors() {
 
         apple = new Apple();
-        assertEquals("The default apple size should be " + DEFAULT_APPLE_SIZE + ".", DEFAULT_APPLE_SIZE, apple.getSize());
+        int[] perimeter = apple.getPerimeter();
+        assertEquals("The default perimeter width should be " + DEFAULT_PERIMETER_WIDTH, DEFAULT_PERIMETER_WIDTH, perimeter[0]);
+        assertEquals("The default perimeter height should be " + DEFAULT_PERIMETER_HEIGHT, DEFAULT_PERIMETER_HEIGHT, perimeter[1]);
 
-        apple = new Apple(CUSTOM_APPLE_SIZE);
-        assertEquals("The apple size should be " + CUSTOM_APPLE_SIZE + ".", CUSTOM_APPLE_SIZE, apple.getSize());
     }
 
     @Test
