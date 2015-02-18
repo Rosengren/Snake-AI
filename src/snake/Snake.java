@@ -44,25 +44,28 @@ public class Snake {
 
     public void update() {
 
-        if (direction == Direction.LEFT) {
-            xCoordinates.add(0, xCoordinates.get(0) - DOT_SIZE);
-            yCoordinates.add(0, yCoordinates.get(0));
-        } else if (direction == Direction.RIGHT) {
-            xCoordinates.add(0, xCoordinates.get(0) + DOT_SIZE);
-            yCoordinates.add(0, yCoordinates.get(0));
-        } else if (direction == Direction.UP) {
-            xCoordinates.add(0, xCoordinates.get(0));
-            yCoordinates.add(0, yCoordinates.get(0) - DOT_SIZE);
-        } else if (direction == Direction.DOWN) {
-            xCoordinates.add(0, xCoordinates.get(0));
-            yCoordinates.add(0, yCoordinates.get(0) + DOT_SIZE);
-        }
+        if (direction == Direction.LEFT)
+            addCoordinate(xCoordinates.get(0) - DOT_SIZE, yCoordinates.get(0));
+        else if (direction == Direction.RIGHT)
+            addCoordinate(xCoordinates.get(0) + DOT_SIZE, yCoordinates.get(0));
+        else if (direction == Direction.UP)
+            addCoordinate(xCoordinates.get(0), yCoordinates.get(0) - DOT_SIZE);
+        else if (direction == Direction.DOWN)
+            addCoordinate(xCoordinates.get(0), yCoordinates.get(0) + DOT_SIZE);
 
-        if (direction != null) {
-            xCoordinates.remove(xCoordinates.size() - 1);
-            yCoordinates.remove(yCoordinates.size() - 1);
-        }
+        if (direction != null)
+            removeCoordinate(xCoordinates.size() - 1,
+                             yCoordinates.size() - 1);
+    }
 
+    public void addCoordinate(int x, int y) {
+        xCoordinates.add(0, x);
+        yCoordinates.add(0, y);
+    }
+
+    public void removeCoordinate(int x, int y) {
+        xCoordinates.remove(x);
+        yCoordinates.remove(y);
     }
 
     public boolean checkWallCollision(int width, int height) {

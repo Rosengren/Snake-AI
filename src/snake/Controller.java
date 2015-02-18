@@ -1,4 +1,5 @@
 package snake;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -16,24 +17,29 @@ public class Controller implements ActionListener {
     private Model model;
     private TAdapter keyPress;
 
+
     public Controller(Model model) {
         this.model = model;
-
         keyPress = new TAdapter();
-
-
     }
 
     public KeyAdapter getKeyListener() {
         return keyPress;
     }
 
+
     public void initGame() {
         model.initGame();
-        timer = new Timer(DELAY, this);
-        timer.start();
+        setupTimer();
         model.update();
     }
+
+
+    private void setupTimer() {
+        timer = new Timer(DELAY, this);
+        timer.start();
+    }
+
 
     private class TAdapter extends KeyAdapter {
 
@@ -67,6 +73,9 @@ public class Controller implements ActionListener {
                     break;
                 case KeyEvent.VK_ESCAPE:
                     model.pauseGame();
+                    break;
+                case KeyEvent.VK_N:
+                    model.runAI();
                     break;
                 default:
                     break;

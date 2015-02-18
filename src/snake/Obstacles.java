@@ -11,7 +11,7 @@ public class Obstacles {
 
     private int numOfObstacles;
 
-    private int size;
+    private int perimeterSize;
 
     public Obstacles() {
         this(DEFAULT_OBSTACLE_SIZE);
@@ -22,34 +22,46 @@ public class Obstacles {
         yCoordinates = new int[MAX_OBSTACLES];
 
         numOfObstacles = 0;
-        this.size = size;
+        this.perimeterSize = size;
     }
 
     public void generatePerimeter(int width, int height) {
 
-        int horizontalObstacles = width / size + 1;
-        int verticalObstacles = height / size + 1;
+        int horizontalObstacles = width / perimeterSize + 1;
+        int verticalObstacles = height / perimeterSize + 1;
 
-        for (int i = 0; i <= horizontalObstacles; i++) {
-            xCoordinates[i] = i * size;
-            xCoordinates[i + horizontalObstacles] = i * size;
-            yCoordinates[i] = 0;
-            yCoordinates[i + horizontalObstacles] = height + size;
-        }
-
-        for (int i = 0; i <= verticalObstacles; i++) {
-            xCoordinates[i + 2 * horizontalObstacles] = 0;
-            xCoordinates[i + 2 * horizontalObstacles + verticalObstacles] = width + size;
-            yCoordinates[i + 2 * horizontalObstacles] = i * size;
-            yCoordinates[i + 2 * horizontalObstacles + verticalObstacles] = i * size;
-        }
+        generateHorizontalPerimeter(horizontalObstacles, height);
+        generateVerticalPerimeter(horizontalObstacles, verticalObstacles, width);
 
         numOfObstacles = 2 * verticalObstacles + 2 * horizontalObstacles;
     }
 
+
+    private void generateHorizontalPerimeter(int horizontalObstacles, int height) {
+
+        for (int i = 0; i <= horizontalObstacles; i++) {
+            xCoordinates[i] = i * perimeterSize;
+            xCoordinates[i + horizontalObstacles] = i * perimeterSize;
+            yCoordinates[i] = 0;
+            yCoordinates[i + horizontalObstacles] = height + perimeterSize;
+        }
+    }
+
+
+    private void generateVerticalPerimeter(int numberOfObstacles, int verticalObstacles, int width) {
+
+        for (int i = 0; i <= verticalObstacles; i++) {
+            xCoordinates[i + 2 * numberOfObstacles] = 0;
+            xCoordinates[i + 2 * numberOfObstacles + verticalObstacles] = width + perimeterSize;
+            yCoordinates[i + 2 * numberOfObstacles] = i * perimeterSize;
+            yCoordinates[i + 2 * numberOfObstacles + verticalObstacles] = i * perimeterSize;
+        }
+    }
+
+
     public void generateObstacle() {
-        int x = (int)(Math.random() * SEED_VALUE) * size;
-        int y = (int)(Math.random() * SEED_VALUE) * size;
+        int x = (int)(Math.random() * SEED_VALUE) * perimeterSize;
+        int y = (int)(Math.random() * SEED_VALUE) * perimeterSize;
 
         if (!addObstacle(x, y)) {
             generateObstacle();
@@ -72,7 +84,7 @@ public class Obstacles {
         if (coordinate.length < 2)
             return false;
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < perimeterSize; i++) {
             if (xCoordinates[i] == coordinate[0] && yCoordinates[i] == coordinate[1])
                 return true;
         }
@@ -88,8 +100,8 @@ public class Obstacles {
         return yCoordinates;
     }
 
-    public int getSize() {
-        return size;
+    public int getPerimeterSize() {
+        return perimeterSize;
     }
 
     public int getNumberOfObstacles() {

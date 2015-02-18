@@ -10,8 +10,8 @@ public class TestSnakeModel {
 
     private static final int DEFAULT_SNAKE_SIZE = 5;
     private static final int DEFAULT_APPLE_SIZE = 10;
-    private static final int DEFAULT_BOARD_WIDTH = 500;
-    private static final int DEFAULT_BOARD_HEIGHT = 500;
+    private static final int DEFAULT_BOARD_WIDTH = 300;
+    private static final int DEFAULT_BOARD_HEIGHT = 300;
 
     private Model game;
 

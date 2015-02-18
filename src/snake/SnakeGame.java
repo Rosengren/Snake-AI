@@ -3,18 +3,13 @@ package snake;
 
 public class SnakeGame {
 
-    private View view;
-    private SnakeFrame frame;
-    private Model model;
-    private Controller controller;
-
     public SnakeGame() {
 
-        frame = new SnakeFrame();
-        view = new View();
+        SnakeFrame frame = new SnakeFrame();
+        View view = new View();
 
-        model = new Model();
-        controller = new Controller(model);
+        Model model = new Model();
+        Controller controller = new Controller(model);
 
         model.addObserver(frame.getView());
         frame.addController(controller.getKeyListener());

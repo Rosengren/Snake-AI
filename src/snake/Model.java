@@ -1,6 +1,8 @@
 package snake;
 
-import java.util.Arrays;
+import artificialIntelligence.AIContext;
+import artificialIntelligence.BreadthFirstSearch;
+
 import java.util.Observable;
 
 public class Model extends Observable {
@@ -117,6 +119,10 @@ public class Model extends Observable {
         return snake;
     }
 
+    public int[] getSnakeHead() {
+        return snake.getHeadCoordinates();
+    }
+
     public Board getBoard() {
         return board;
     }
@@ -146,8 +152,12 @@ public class Model extends Observable {
         int[] xObstacles = obstacles.getXCoordinates();
         int[] yObstacles = obstacles.getYCoordinates();
 
-        for (int i = 0; i < obstacles.getSize(); i++) {
-            layout[xObstacles[i] / dotSize][yObstacles[i] / dotSize] = 2;
+        System.out.println("w: " + width + ", h: " + height);
+        System.out.println("x: " + xObstacles.length + ". y: " + yObstacles.length + ". size: " + obstacles.getNumberOfObstacles());
+        System.out.println("xx: " + xObstacles[10]);
+        for (int i = 0; i < obstacles.getNumberOfObstacles() - 1; i++) {
+//            layout[xObstacles[i] / dotSize][yObstacles[i] / dotSize] = 2;
+            System.out.println("x: " + xObstacles[i] + " y: " + yObstacles[i]);
         }
 
         int xApple = apple.getXCoordinate() / dotSize;
@@ -155,5 +165,23 @@ public class Model extends Observable {
 
         layout[xApple][yApple] = 3;
         return layout;
+    }
+
+
+    public void runAI() {
+        AIContext ai = new AIContext(new BreadthFirstSearch());
+//        ai.getPath(getBoardLayout(), snake.getDirection(), snake.getHeadCoordinates());
+
+        int[][] bl = getBoardLayout();
+        String result = "";
+        for (int i = 0; i < bl.length; i++) {
+            for (int j = 0; j < bl[0].length; j++) {
+                result += bl[i][j] + " ";
+            }
+            result += "\n";
+        }
+
+        System.out.println(result);
+
     }
 }

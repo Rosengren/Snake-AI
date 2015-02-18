@@ -90,13 +90,13 @@ public class View extends JPanel implements Observer {
         String replay = "Press Enter to Restart";
         String quitMsg = "Press Space to Quit";
         Font small = new Font("Helvetica", Font.BOLD, 14);
-        FontMetrics metr = this.getFontMetrics(small);
+        FontMetrics metric = this.getFontMetrics(small);
 
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(msg, (WIDTH - metr.stringWidth(msg)) / 2, HEIGHT / 2 - 20);
-        g.drawString(replay, (WIDTH - metr.stringWidth(replay)) / 2, HEIGHT / 2);
-        g.drawString(quitMsg, (WIDTH - metr.stringWidth(quitMsg)) / 2, HEIGHT / 2 + 20);
+        g.drawString(msg, (WIDTH - metric.stringWidth(msg)) / 2, HEIGHT / 2 - 20);
+        g.drawString(replay, (WIDTH - metric.stringWidth(replay)) / 2, HEIGHT / 2);
+        g.drawString(quitMsg, (WIDTH - metric.stringWidth(quitMsg)) / 2, HEIGHT / 2 + 20);
     }
 
     @Override

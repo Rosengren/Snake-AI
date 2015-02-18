@@ -28,9 +28,9 @@ public class TestObstacles {
     @Test
     public void testObstacleSize() {
 
-        assertEquals("Obstacle should have default size: " + DEFAULT_OBSTACLE_SIZE + ".", DEFAULT_OBSTACLE_SIZE, obstacles.getSize());
+        assertEquals("Obstacle should have default size: " + DEFAULT_OBSTACLE_SIZE + ".", DEFAULT_OBSTACLE_SIZE, obstacles.getPerimeterSize());
         obstacles = new Obstacles(CUSTOM_OBSTACLE_SIZE);
-        assertEquals("Obstacle should have custom size: " + CUSTOM_OBSTACLE_SIZE + ".", CUSTOM_OBSTACLE_SIZE, obstacles.getSize());
+        assertEquals("Obstacle should have custom size: " + CUSTOM_OBSTACLE_SIZE + ".", CUSTOM_OBSTACLE_SIZE, obstacles.getPerimeterSize());
     }
 
     @Test

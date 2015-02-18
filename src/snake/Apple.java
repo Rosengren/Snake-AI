@@ -29,38 +29,51 @@ public class Apple {
         yCoordinate = y;
     }
 
+
     // TODO: make sure apple is not behind an obstacle
     public void generateNewCoordinates() {
-        int r = (int) (Math.random() * SEED_VALUE);
-        xCoordinate = r * size;
-        r = (int) (Math.random() * SEED_VALUE);
-        yCoordinate = r * size;
 
-        if (xCoordinate == 0 || xCoordinate == width ||
-                yCoordinate == 0 || yCoordinate == height) {
-            generateNewCoordinates();
-        }
+        do {
+            xCoordinate = generateCoordinate();
+            yCoordinate = generateCoordinate();
+        } while (isOutsidePerimeter(xCoordinate, yCoordinate));
     }
+
+
+    private int generateCoordinate() {
+        return (int) (Math.random() * SEED_VALUE) * size;
+    }
+
+
+    private boolean isOutsidePerimeter(int x, int y) {
+        return (x == 0 || x == width || y == 0 || y == height);
+    }
+
 
     public boolean checkCollision(int x, int y) {
         return x == xCoordinate && y == yCoordinate;
     }
 
+
     public int[] getCoordinates() {
         return new int[] {xCoordinate, yCoordinate};
     }
+
 
     public int getXCoordinate() {
         return xCoordinate;
     }
 
+
     public int getYCoordinate() {
         return yCoordinate;
     }
 
+
     public int getSize() {
         return size;
     }
+
 
     public void setPerimeter(int width, int height) {
         this.height = height;

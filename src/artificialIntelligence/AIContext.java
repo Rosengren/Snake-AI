@@ -1,14 +1,17 @@
 package artificialIntelligence;
 
-/**
- * Created by kevinrosengren on 1/27/15.
- */
+import snake.Direction;
+
 public class AIContext {
 
     private AIStrategy strategy;
 
     public AIContext(AIStrategy strategy) {
         this.strategy = strategy;
+    }
+
+    public Direction[] getPath(int[][] boardLayout, Direction direction, int[] snakeHead) {
+        return strategy.getPath(boardLayout, direction, snakeHead);
     }
 
 }
