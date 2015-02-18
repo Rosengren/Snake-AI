@@ -17,15 +17,13 @@ public class TestSnake {
     private final int DEFAULT_SNAKE_LENGTH = 5;
     private final int CUSTOM_SNAKE_LENGTH = 10;
 
-    private final int DEFAULT_DOT_SIZE = 10;
-
     private final int SMALL_BOARD_WIDTH = 10;
     private final int SMALL_BOARD_HEIGHT = 10;
 
     private final int LARGE_BOARD_WIDTH = 1000;
     private final int LARGE_BOARD_HEIGHT = 1000;
 
-    private final int[] DEFAULT_X_COORDINATES = {200, 190, 180, 170, 160, 150, 140, 130, 120, 110};
+    private final int[] DEFAULT_X_COORDINATES = {200, 199, 198, 197, 196, 195, 194, 193, 192, 191};
     private final int[] DEFAULT_Y_COORDINATES = {200, 200, 200, 200, 200, 200, 200, 200, 200, 200};
 
     @Before
@@ -102,27 +100,27 @@ public class TestSnake {
         snakeYCoordinates = snake.getYCoordinates();
 
         assertEquals("(up) Snake head should have x coordinate: " + DEFAULT_X_COORDINATES[0] + ".", DEFAULT_X_COORDINATES[0], snakeXCoordinates[0]);
-        assertEquals("(up) Snake head should have y coordinate: " + (DEFAULT_Y_COORDINATES[0] + DEFAULT_DOT_SIZE) + ".", DEFAULT_Y_COORDINATES[0] - DEFAULT_DOT_SIZE, snakeYCoordinates[0]);
+        assertEquals("(up) Snake head should have y coordinate: " + (DEFAULT_Y_COORDINATES[0] + 1) + ".", DEFAULT_Y_COORDINATES[0] - 1, snakeYCoordinates[0]);
         moveSnake(Direction.LEFT);
         snakeXCoordinates = snake.getXCoordinates();
         snakeYCoordinates = snake.getYCoordinates();
 
-        assertEquals("(left) Snake head should have x coordinate: " + DEFAULT_X_COORDINATES[0] + ".", DEFAULT_X_COORDINATES[0] - DEFAULT_DOT_SIZE, snakeXCoordinates[0]);
-        assertEquals("(left) Snake head should have y coordinate: " + (DEFAULT_Y_COORDINATES[0] + DEFAULT_DOT_SIZE) + ".", DEFAULT_Y_COORDINATES[0], snakeYCoordinates[0]);
+        assertEquals("(left) Snake head should have x coordinate: " + DEFAULT_X_COORDINATES[0] + ".", DEFAULT_X_COORDINATES[0] - 1, snakeXCoordinates[0]);
+        assertEquals("(left) Snake head should have y coordinate: " + (DEFAULT_Y_COORDINATES[0] + 1) + ".", DEFAULT_Y_COORDINATES[0], snakeYCoordinates[0]);
 
         moveSnake(Direction.DOWN);
         snakeXCoordinates = snake.getXCoordinates();
         snakeYCoordinates = snake.getYCoordinates();
 
         assertEquals("(down) Snake head should have x coordinate: " + DEFAULT_X_COORDINATES[0] + ".", DEFAULT_X_COORDINATES[0], snakeXCoordinates[0]);
-        assertEquals("(down) Snake head should have y coordinate: " + (DEFAULT_Y_COORDINATES[0] + DEFAULT_DOT_SIZE) + ".", DEFAULT_Y_COORDINATES[0] + DEFAULT_DOT_SIZE, snakeYCoordinates[0]);
+        assertEquals("(down) Snake head should have y coordinate: " + (DEFAULT_Y_COORDINATES[0] + 1) + ".", DEFAULT_Y_COORDINATES[0] + 1, snakeYCoordinates[0]);
 
         moveSnake(Direction.RIGHT);
         snakeXCoordinates = snake.getXCoordinates();
         snakeYCoordinates = snake.getYCoordinates();
 
-        assertEquals("(right) Snake head should have x coordinate: " + DEFAULT_X_COORDINATES[0] + ".", DEFAULT_X_COORDINATES[0] + DEFAULT_DOT_SIZE, snakeXCoordinates[0]);
-        assertEquals("(right) Snake head should have y coordinate: " + (DEFAULT_Y_COORDINATES[0] + DEFAULT_DOT_SIZE) + ".", DEFAULT_Y_COORDINATES[0], snakeYCoordinates[0]);
+        assertEquals("(right) Snake head should have x coordinate: " + DEFAULT_X_COORDINATES[0] + ".", DEFAULT_X_COORDINATES[0] + 1, snakeXCoordinates[0]);
+        assertEquals("(right) Snake head should have y coordinate: " + (DEFAULT_Y_COORDINATES[0] + 1) + ".", DEFAULT_Y_COORDINATES[0], snakeYCoordinates[0]);
 
     }
 

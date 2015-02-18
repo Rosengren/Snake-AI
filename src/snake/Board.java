@@ -2,8 +2,8 @@ package snake;
 
 public class Board {
 
-    private static final int DEFAULT_WIDTH = 500;
-    private static final int DEFAULT_HEIGHT = 500;
+    private static final int DEFAULT_WIDTH = 50;
+    private static final int DEFAULT_HEIGHT = 50;
 
     private int width;
     private int height;

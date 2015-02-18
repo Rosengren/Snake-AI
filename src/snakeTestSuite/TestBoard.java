@@ -12,8 +12,8 @@ public class TestBoard {
 
     private Board board;
 
-    private final int DEFAULT_BOARD_WIDTH = 500;
-    private final int DEFAULT_BOARD_HEIGHT = 500;
+    private final int DEFAULT_BOARD_WIDTH = 50;
+    private final int DEFAULT_BOARD_HEIGHT = 50;
     private final int CUSTOM_BOARD_WIDTH = 100;
     private final int CUSTOM_BOARD_HEIGHT = 100;
 

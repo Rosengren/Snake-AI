@@ -10,10 +10,6 @@ public class Model extends Observable {
     private int score;
     private Board board;
 
-    /** Constants **/
-    private final int BOARD_WIDTH = 300;
-    private final int BOARD_HEIGHT = 300;
-
     private Snake snake;
     private Apple apple;
     private Obstacles obstacles;
@@ -27,9 +23,9 @@ public class Model extends Observable {
         // initialize snake
         snake = new Snake();
         apple = new Apple();
-        apple.setPerimeter(BOARD_WIDTH, BOARD_HEIGHT);
+        apple.setPerimeter(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
         obstacles = new Obstacles();
-        board = new Board(BOARD_WIDTH, BOARD_HEIGHT);
+        board = new Board(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
         endGame = false;
         pauseGame = false;
         inGame = false;
@@ -41,7 +37,7 @@ public class Model extends Observable {
 
         score = 0;
         snake.initialize();
-        obstacles.generatePerimeter(BOARD_WIDTH, BOARD_HEIGHT);
+        obstacles.generatePerimeter(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
         setChanged();
         notifyObservers("ingame");
         inGame = true;
@@ -97,7 +93,7 @@ public class Model extends Observable {
 
     public void checkCollision() {
 
-        if (snake.checkWallCollision(BOARD_WIDTH, BOARD_HEIGHT) ||
+        if (snake.checkWallCollision(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT) ||
                 snake.checkSnakeCollision() || obstacles.checkCollision(snake.getHeadCoordinates())) {
             endGame();
         }
@@ -137,8 +133,8 @@ public class Model extends Observable {
 
     public int[][] getBoardLayout() {
 
-        int height = BOARD_HEIGHT;
-        int width = BOARD_WIDTH;
+        int height = Settings.BOARD_HEIGHT;
+        int width = Settings.BOARD_WIDTH;
 
         int[][] layout = new int[width][height];
 
