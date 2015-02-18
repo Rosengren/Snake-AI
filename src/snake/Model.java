@@ -137,16 +137,14 @@ public class Model extends Observable {
 
     public int[][] getBoardLayout() {
 
-        int dotSize = snake.getDotSize();
-
-        int height = BOARD_HEIGHT / dotSize;
-        int width = BOARD_WIDTH / dotSize;
+        int height = BOARD_HEIGHT;
+        int width = BOARD_WIDTH;
 
         int[][] layout = new int[width][height];
 
         int[] snakeCoordinates = snake.getHeadCoordinates();
-        int xSnake = snakeCoordinates[0] / dotSize;
-        int ySnake = snakeCoordinates[1] / dotSize;
+        int xSnake = snakeCoordinates[0];
+        int ySnake = snakeCoordinates[1];
         layout[xSnake][ySnake] = 1;
 
         int[] xObstacles = obstacles.getXCoordinates();
@@ -160,8 +158,8 @@ public class Model extends Observable {
             System.out.println("x: " + xObstacles[i] + " y: " + yObstacles[i]);
         }
 
-        int xApple = apple.getXCoordinate() / dotSize;
-        int yApple = apple.getYCoordinate() / dotSize;
+        int xApple = apple.getXCoordinate();
+        int yApple = apple.getYCoordinate();
 
         layout[xApple][yApple] = 3;
         return layout;

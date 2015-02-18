@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Snake {
 
     private static final int DEFAULT_LENGTH = 5;
-    private static final int DOT_SIZE = 10;
     private static final int DEFAULT_STARTING_POINT = 200;
 
     private int length;
@@ -45,13 +44,13 @@ public class Snake {
     public void update() {
 
         if (direction == Direction.LEFT)
-            addCoordinate(xCoordinates.get(0) - DOT_SIZE, yCoordinates.get(0));
+            addCoordinate(xCoordinates.get(0) - 1, yCoordinates.get(0));
         else if (direction == Direction.RIGHT)
-            addCoordinate(xCoordinates.get(0) + DOT_SIZE, yCoordinates.get(0));
+            addCoordinate(xCoordinates.get(0) + 1, yCoordinates.get(0));
         else if (direction == Direction.UP)
-            addCoordinate(xCoordinates.get(0), yCoordinates.get(0) - DOT_SIZE);
+            addCoordinate(xCoordinates.get(0), yCoordinates.get(0) - 1);
         else if (direction == Direction.DOWN)
-            addCoordinate(xCoordinates.get(0), yCoordinates.get(0) + DOT_SIZE);
+            addCoordinate(xCoordinates.get(0), yCoordinates.get(0) + 1);
 
         if (direction != null)
             removeCoordinate(xCoordinates.size() - 1,
@@ -106,7 +105,7 @@ public class Snake {
         yCoordinates = new ArrayList<Integer>();
 
         for (int i = 0; i < length; i++) {
-            xCoordinates.add(DEFAULT_STARTING_POINT - i * DOT_SIZE);
+            xCoordinates.add(DEFAULT_STARTING_POINT - i);
             yCoordinates.add(DEFAULT_STARTING_POINT);
         }
     }
@@ -136,9 +135,4 @@ public class Snake {
     public int getLength() {
         return length;
     }
-
-    public int getDotSize() {
-        return DOT_SIZE;
-    }
-
 }
