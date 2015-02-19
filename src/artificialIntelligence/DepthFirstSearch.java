@@ -2,107 +2,39 @@ package artificialIntelligence;
 
 import snake.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class DepthFirstSearch implements AIStrategy {
 
-    private Stack<int[]> path;
-    private List<int[]> newPath;
+    private List<int[]> path;
 
     public DepthFirstSearch() {
-        path = new Stack<int[]>();
-        newPath = new ArrayList<int[]>();
+        path = new ArrayList<int[]>();
 
     }
 
     @Override
     public Direction[] getPath(int[][] boardLayout, int[] snakeHead) {
         boolean[][] visited = new boolean[boardLayout.length][boardLayout[0].length];
-        System.out.println("Snake Head: " + snakeHead[0] + "," + snakeHead[1]);
-        String result = "";
-        for (int i = 0; i < boardLayout.length; i++) {
-            for (int j = 0; j < boardLayout[i].length; j++) {
-                result += boardLayout[j][i];
-
-            }
-            result += "\n";
-        }
-
-        System.out.println(result);
-
         depthFirstSearch(boardLayout, visited, snakeHead);
-        Direction[] directions = getDirectionPath(new ArrayList<int[]>(path));
-        Direction[] newDirections = getDirectionPath(newPath);
-        result = "";
-        for (int[] p : newPath) {
-            result += "[" + p[0] + "," + p[1] + "]";
-        }
-
-        System.out.println("Path: " + result);
-        result = "";
-        for (Direction dir : newDirections) {
-            result += dir + " ";
-        }
-        System.out.println("Route: " + result);
-
-        return newDirections;
+        path.add(0, snakeHead); // append head
+        return getDirectionPath(path);
     }
 
-    private void printBoard(boolean[][] visited) {
-        String result = "";
-        for (int i = 0; i < visited.length; i++) {
-            for (int j = 0; j < visited[i].length; j++) {
-                if (visited[j][i])
-                    result += "* ";
-                else
-                    result += "- ";
-            }
-            result += "\n";
-        }
-
-        System.out.println(result);
-    }
 
     private boolean depthFirstSearch(int[][] board, boolean[][] visited, int[] current) {
-
         visited[current[0]][current[1]] = true;
 
-        printBoard(visited);
-        if (isAppleCoordinates(board, current)) {
-            System.out.println("Found Apple At: [" + current[0] + "," + current[1] + "]");
-            return true;
-        }
+        if (isAppleCoordinates(board, current)) return true;
 
         for (int[] neighbor : getNeighbors(current, board)) {
-            if (notVisited(visited, neighbor)) {
-                if (notSnake(board, neighbor) && notObstacle(board, neighbor)) {
-                    if (depthFirstSearch(board, visited, neighbor)) {
-
-                        path.push(neighbor);
-
-                        newPath.add(0, neighbor);
-                        return true;
-                    }
-
-                } else {
-                    System.out.println("SNAKE OR OBSTACLE AT [" + neighbor[0] + "," + neighbor[1] + " = " + board[neighbor[0]][neighbor[1]]);
+            if (notVisited(visited, neighbor) && notSnake(board, neighbor) && notObstacle(board, neighbor)) {
+                if (depthFirstSearch(board, visited, neighbor)) {
+                    path.add(0, neighbor);
+                    return true;
                 }
-//                if (depthFirstSearch(board, visited, neighbor)) {
-//                    path.push(neighbor);
-//                    return true;
-//                } else {
-//                    path.pop();
-//                    System.out.println("Too far");
-//                    path = new Stack<int[]>();
-//                    return false;
-//                }
-            } else {
-//                System.out.println("Too far: " + board[neighbor[0]][neighbor[1]] + " = [" + current[0] + "," + current[1] + "]");
-//                path.pop();
-//                path = new Stack<int[]>();
-//                return false;
             }
         }
 
@@ -118,13 +50,16 @@ public class DepthFirstSearch implements AIStrategy {
         return board[coordinates[0]][coordinates[1]] != SNAKE;
     }
 
+
     private boolean notObstacle(int[][] boardLayout, int[] coordinates) {
         return boardLayout[coordinates[0]][coordinates[1]] != OBSTACLE;
     }
 
+
     private boolean isAppleCoordinates(int[][] boardLayout, int[] coordinates) {
         return boardLayout[coordinates[0]][coordinates[1]] == APPLE;
     }
+
 
     private Stack<int[]> getNeighbors(int[] current, int[][] board) {
 
@@ -144,9 +79,6 @@ public class DepthFirstSearch implements AIStrategy {
 
         if (current[1] != 0)
             result.push(new int[]{current[0], current[1] - 1}); // UP
-
-
-
 
         return result;
     }

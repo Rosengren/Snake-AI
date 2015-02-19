@@ -1,14 +1,12 @@
 package snake;
 
 import artificialIntelligence.AIContext;
-import artificialIntelligence.BreadthFirstSearch;
 import artificialIntelligence.DepthFirstSearch;
 
 import java.util.Observable;
 
 public class Model extends Observable {
 
-    private int score;
     private Board board;
 
     private Snake snake;
@@ -30,13 +28,11 @@ public class Model extends Observable {
         endGame = false;
         pauseGame = false;
         inGame = false;
-        score = 0;
 
     }
 
     public void initGame() {
 
-        score = 0;
         resetSnake();
         setChanged();
         notifyObservers("ingame");
@@ -77,7 +73,7 @@ public class Model extends Observable {
     private void endGame() {
         setChanged();
         notifyObservers("endgame");
-//        resetSnake();
+        resetSnake();
         inGame = false;
         endGame = true;
     }
@@ -108,7 +104,6 @@ public class Model extends Observable {
 
     public void checkApple() {
         if (snake.checkCollision(apple.getXCoordinate(), apple.getYCoordinate())) {
-            score += 1;
             apple.generateNewCoordinates();
         }
     }
@@ -125,13 +120,6 @@ public class Model extends Observable {
         return board;
     }
 
-    public Apple getApple() {
-        return apple;
-    }
-
-    public int getScore() {
-        return score;
-    }
 
     public int[][] getBoardLayout() {
 

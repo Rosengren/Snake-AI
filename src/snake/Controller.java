@@ -26,9 +26,7 @@ public class Controller implements ActionListener {
     }
 
     private void playAI() {
-        System.out.println("Running AI");
         Direction[] moves = model.runAI();
-
         for (Direction dir : moves) {
             model.moveSnake(dir);
             model.update();

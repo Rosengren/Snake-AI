@@ -1,7 +1,5 @@
 package snake;
 
-import java.util.Arrays;
-
 public class Obstacles {
 
     private static final int MAX_OBSTACLES = 400;
@@ -21,48 +19,45 @@ public class Obstacles {
 
     public void generatePerimeter(int width, int height) {
 
-        int horizontalObstacles = width;
-        int verticalObstacles = height;
-
-        generateHorizontalPerimeter(horizontalObstacles, height);
-        generateVerticalPerimeter(horizontalObstacles, verticalObstacles, width);
-
-        numberOfObstacles = 2 * verticalObstacles + 2 * horizontalObstacles;
+        generateHorizontalPerimeter(height, width);
+        generateVerticalPerimeter(height, width);
+        numberOfObstacles = 2 * height + 2 * width;
     }
 
 
-    private void generateHorizontalPerimeter(int horizontalObstacles, int height) {
+    private void generateHorizontalPerimeter(int height, int width) {
 
-        for (int i = 0; i <= horizontalObstacles - 1; i++) {
+        for (int i = 0; i <= width - 1; i++) {
             xCoordinates[i] = i;
-            xCoordinates[i + horizontalObstacles] = i;
+            xCoordinates[i + width] = i;
             yCoordinates[i] = 0;
-            yCoordinates[i + horizontalObstacles] = height - 1;
+            yCoordinates[i + width] = height - 1;
         }
     }
 
 
-    private void generateVerticalPerimeter(int numberOfObstacles, int verticalObstacles, int width) {
+    private void generateVerticalPerimeter(int height, int width) {
 
-        for (int i = 0; i <= verticalObstacles - 1; i++) {
-            xCoordinates[i + 2 * numberOfObstacles] = 0;
-            xCoordinates[i + 2 * numberOfObstacles + verticalObstacles] = width - 1;
-            yCoordinates[i + 2 * numberOfObstacles] = i;
-            yCoordinates[i + 2 * numberOfObstacles + verticalObstacles] = i;
+        for (int i = 0; i <= height - 1; i++) {
+            xCoordinates[i + 2 * width] = 0;
+            xCoordinates[i + 2 * width + height] = width - 1;
+            yCoordinates[i + 2 * width] = i;
+            yCoordinates[i + 2 * width + height] = i;
         }
     }
 
 
     public void generateObstacle() {
+
         int x = (int)(Math.random() * SEED_VALUE);
         int y = (int)(Math.random() * SEED_VALUE);
 
-        if (!addObstacle(x, y)) {
+        if (!addObstacle(x, y))
             generateObstacle();
-        }
     }
 
     public boolean addObstacle(int x, int y) {
+
         for (int i = 0; i < numberOfObstacles; i++)
             if (xCoordinates[i] == x && yCoordinates[i] == y)
                 return false;
@@ -75,13 +70,11 @@ public class Obstacles {
 
     public boolean checkCollision(int[] coordinate) {
 
-        if (coordinate.length < 2)
-            return false;
+        if (coordinate.length < 2) return false;
 
-        for (int i = 0; i < numberOfObstacles; i++) {
+        for (int i = 0; i < numberOfObstacles; i++)
             if (xCoordinates[i] == coordinate[0] && yCoordinates[i] == coordinate[1])
                 return true;
-        }
 
         return false;
     }
