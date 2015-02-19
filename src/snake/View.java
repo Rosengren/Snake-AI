@@ -99,7 +99,6 @@ public class View extends JPanel implements Observer {
 
     @Override
     public void paint(Graphics g) {
-        System.out.println("PAINTING");
         super.paint(g);
 
         if (inGame) {

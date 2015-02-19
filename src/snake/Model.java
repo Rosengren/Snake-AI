@@ -143,11 +143,11 @@ public class Model extends Observable {
 
         int[][] layout = new int[width][height];
 
-        int[] snakeCoordinates = snake.getHeadCoordinates();
-
-        int xSnake = snakeCoordinates[0];
-        int ySnake = snakeCoordinates[1];
-        layout[xSnake][ySnake] = 1;
+        int[] xSnake = snake.getXCoordinates();
+        int[] ySnake = snake.getYCoordinates();
+        for (int i = 0; i < xSnake.length; i++) {
+            layout[xSnake[i]][ySnake[i]] = 1;
+        }
 
         int[] xObstacles = obstacles.getXCoordinates();
         int[] yObstacles = obstacles.getYCoordinates();

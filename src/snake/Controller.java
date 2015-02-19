@@ -30,7 +30,6 @@ public class Controller implements ActionListener {
         Direction[] moves = model.runAI();
 
         for (Direction dir : moves) {
-            System.out.println("Direction: " + dir);
             model.moveSnake(dir);
             model.update();
         }
