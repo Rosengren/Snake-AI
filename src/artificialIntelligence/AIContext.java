@@ -10,8 +10,8 @@ public class AIContext {
         this.strategy = strategy;
     }
 
-    public Direction[] getPath(int[][] boardLayout, Direction direction, int[] snakeHead) {
-        return strategy.getPath(boardLayout, direction, snakeHead);
+    public Direction[] getPath(int[][] boardLayout, int[] snakeHead) {
+        return strategy.getPath(boardLayout, snakeHead);
     }
 
 }

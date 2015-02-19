@@ -5,7 +5,7 @@ import snake.*;
 public class AstarTraversal implements AIStrategy {
 
     @Override
-    public Direction[] getPath(int[][] boardLayout, Direction direction, int[] snakeHead) {
+    public Direction[] getPath(int[][] boardLayout, int[] snakeHead) {
         return null;
     }
 }

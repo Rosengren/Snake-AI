@@ -2,6 +2,7 @@ package snake;
 
 import artificialIntelligence.AIContext;
 import artificialIntelligence.BreadthFirstSearch;
+import artificialIntelligence.DepthFirstSearch;
 
 import java.util.Observable;
 
@@ -98,7 +99,7 @@ public class Model extends Observable {
 
     public void checkCollision() {
 
-        if (snake.checkWallCollision(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT) || // snake.checkSnakeCollision() ||
+        if (snake.checkWallCollision(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT) || snake.checkSnakeCollision() ||
              obstacles.checkCollision(snake.getHeadCoordinates())) {
             endGame();
         }
@@ -118,10 +119,6 @@ public class Model extends Observable {
 
     public Snake getSnake() {
         return snake;
-    }
-
-    public int[] getSnakeHead() {
-        return snake.getHeadCoordinates();
     }
 
     public Board getBoard() {
@@ -166,7 +163,8 @@ public class Model extends Observable {
 
 
     public Direction[] runAI() {
-        AIContext ai = new AIContext(new BreadthFirstSearch());
-        return ai.getPath(getBoardLayout(), snake.getDirection(), snake.getHeadCoordinates());
+//        AIContext ai = new AIContext(new BreadthFirstSearch());
+        AIContext ai = new AIContext(new DepthFirstSearch());
+        return ai.getPath(getBoardLayout(), snake.getHeadCoordinates());
     }
 }

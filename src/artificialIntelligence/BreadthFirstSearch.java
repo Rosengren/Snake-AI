@@ -6,13 +6,8 @@ import java.util.*;
 
 public class BreadthFirstSearch implements AIStrategy {
 
-    private static final int VISITED  = -1;
-    private static final int SNAKE    = 1;
-    private static final int OBSTACLE = 2;
-    private static final int APPLE    = 3;
-
     @Override
-    public Direction[] getPath(int[][] boardLayout, Direction direction, int[] snakeHead) {
+    public Direction[] getPath(int[][] boardLayout, int[] snakeHead) {
 
         Queue<int[]> frontier = new LinkedList<int[]>();
         frontier.add(snakeHead);
@@ -42,20 +37,6 @@ public class BreadthFirstSearch implements AIStrategy {
 
         return getDirectionPath(shortestPath);
 
-    }
-
-    private Direction getDirection(int[] current, int[] previous) {
-
-        if (current[0] > previous[0]) {
-            return Direction.RIGHT;
-        }
-
-        else if (current[0] < previous[0])
-            return Direction.LEFT;
-        else if (current[1] > previous[1])
-            return Direction.DOWN;
-
-        return Direction.UP;
     }
 
     private String coordinatesToString(int[] coordinates) {
@@ -112,6 +93,20 @@ public class BreadthFirstSearch implements AIStrategy {
         }
 
         return directionPath;
+    }
+
+    private Direction getDirection(int[] current, int[] previous) {
+
+        if (current[0] > previous[0]) {
+            return Direction.RIGHT;
+        }
+
+        else if (current[0] < previous[0])
+            return Direction.LEFT;
+        else if (current[1] > previous[1])
+            return Direction.DOWN;
+
+        return Direction.UP;
     }
 
     private ArrayList<int[]> getNeighbors(int[] current, int[][] board) {
