@@ -75,6 +75,7 @@ public class Controller implements ActionListener {
                     model.pauseGame();
                     break;
                 case KeyEvent.VK_N:
+                    System.out.println("Running AI");
                     model.runAI();
                     break;
                 default:

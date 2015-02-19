@@ -6,6 +6,11 @@ import java.util.*;
 
 public class BreadthFirstSearch implements AIStrategy {
 
+    private static final int VISITED = -1;
+    private static final int SNAKE = 1;
+    private static final int PERIMETER = 2;
+    private static final int APPLE = 3;
+
     // TODO: handle directions that the snake cannot move in
 
     @Override
@@ -21,32 +26,51 @@ public class BreadthFirstSearch implements AIStrategy {
         int[] current = new int[] {0, 0};
         while (!frontier.isEmpty()) {
             current = frontier.remove();
-                for (int[] neighbor : getNeighbors(current, boardLayout)) {
-//                if (!came_from.contains(neighbor)) { // not visited
-//                System.out.println("Checking " + neighbor[0] + "," + neighbor[1]);
-                    if (doesNotContain(came_from, neighbor)) {
-                        frontier.add(neighbor);
-                        came_from.add(neighbor);
-//                    System.out.println("Visited: " + neighbor[0] + "," + neighbor[1]);
-//                    System.out.println("came_from length: " + came_from.size());
-                    }
+            if (isAppleCoordinates(boardLayout, current)) {
+                break;
+            }
+
+            for (int[] neighbor : getNeighbors(current, boardLayout)) {
+                if (notVisited(boardLayout, neighbor) && notObstacle(boardLayout, neighbor)) {
+                    frontier.add(neighbor);
+                    came_from.add(neighbor);
                 }
+            }
+            setVisited(boardLayout, current);
         }
 
-        System.out.println("Found Apple at " + current[0] + ", " + current[1]);
+        System.out.println("Found Apple at " + current[0] + ", " + current[1] + " " + boardLayout[current[0]][current[1]]);
         return null;
     }
 
-    private boolean doesNotContain(ArrayList<int[]> arr, int[] value) {
-        for (int i = 0; i < arr.size(); i++) {
-            int[] val = arr.get(i);
-            if (value[0] == val[0] && value[1] == val[1]) {
-                return false;
+    private void printBoard(int[][] boardLayout) {
+        String result = "";
+        for (int i = 0; i < boardLayout.length; i++) {
+            for (int j = 0; j < boardLayout[0].length; j++) {
+                result += boardLayout[i][j] + " ";
             }
+            result += "\n";
         }
 
-        return true;
+        System.out.println(result);
     }
+
+    private boolean notVisited(int[][] boardLayout, int[] coordinates) {
+        return boardLayout[coordinates[0]][coordinates[1]] != VISITED;
+    }
+
+    private void setVisited(int[][] boardLayout, int[] coordinates) {
+        boardLayout[coordinates[0]][coordinates[1]] = VISITED;
+    }
+
+    private boolean notObstacle(int[][] boardLayout, int[] coordinates) {
+        return boardLayout[coordinates[0]][coordinates[1]] != PERIMETER;
+    }
+
+    private boolean isAppleCoordinates(int[][] boardLayout, int[] coordinates) {
+        return boardLayout[coordinates[0]][coordinates[1]] == APPLE;
+    }
+
 
     private ArrayList<int[]> reconstructShortestPath(int[] goal, int[] start) {
         int[] current = goal;

@@ -162,7 +162,7 @@ public class Model extends Observable {
 
     public void runAI() {
         AIContext ai = new AIContext(new BreadthFirstSearch());
-//        ai.getPath(getBoardLayout(), snake.getDirection(), snake.getHeadCoordinates());
+        ai.getPath(getBoardLayout(), snake.getDirection(), snake.getHeadCoordinates());
 
         int[][] bl = getBoardLayout();
         String result = "";
