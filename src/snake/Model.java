@@ -1,6 +1,7 @@
 package snake;
 
 import artificialIntelligence.AIContext;
+import artificialIntelligence.AstarTraversal;
 import artificialIntelligence.DepthFirstSearch;
 
 import java.util.Observable;
@@ -87,7 +88,7 @@ public class Model extends Observable {
 
             // need to update view about:
             setChanged();
-            notifyObservers(new int[][] { apple.getCoordinates(),
+            notifyObservers(new int[][]{apple.getCoordinates(),
                     snake.getXCoordinates(), snake.getYCoordinates(),
                     obstacles.getXCoordinates(), obstacles.getYCoordinates()});
         }
@@ -152,7 +153,8 @@ public class Model extends Observable {
 
     public Direction[] runAI() {
 //        AIContext ai = new AIContext(new BreadthFirstSearch());
-        AIContext ai = new AIContext(new DepthFirstSearch());
+//        AIContext ai = new AIContext(new DepthFirstSearch());
+        AIContext ai = new AIContext(new AstarTraversal());
         return ai.getPath(getBoardLayout(), snake.getHeadCoordinates());
     }
 }
