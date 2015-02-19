@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Snake {
 
     private static final int DEFAULT_LENGTH = 5;
-    private static final int DEFAULT_STARTING_POINT = 200;
 
     private int length;
 
@@ -13,9 +12,11 @@ public class Snake {
     private ArrayList<Integer> yCoordinates;
 
     private Direction direction;
+    private int startingPosition;
 
     public Snake(int size) {
         this.length = size;
+        startingPosition = Settings.SNAKE_STARTING_POSITION;
 
         direction = null; // initially not moving
         initialize();
@@ -105,8 +106,8 @@ public class Snake {
         yCoordinates = new ArrayList<Integer>();
 
         for (int i = 0; i < length; i++) {
-            xCoordinates.add(DEFAULT_STARTING_POINT - i);
-            yCoordinates.add(DEFAULT_STARTING_POINT);
+            xCoordinates.add(startingPosition - i);
+            yCoordinates.add(startingPosition);
         }
     }
 

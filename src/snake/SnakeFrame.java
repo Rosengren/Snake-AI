@@ -12,10 +12,6 @@ public class SnakeFrame extends JFrame {
 
     private View gamePanel;
 
-    /** Constants **/
-    private final int WIDTH = 320;
-    private final int HEIGHT = 340;
-
     public SnakeFrame() {
         gamePanel = new View();
         add(gamePanel);
@@ -25,7 +21,7 @@ public class SnakeFrame extends JFrame {
     public void initializeFrame() {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(WIDTH, HEIGHT);
+        setSize(Settings.FRAME_WIDTH, Settings.FRAME_HEIGHT);
         setLocationRelativeTo(null);
 
         setTitle("Snake");

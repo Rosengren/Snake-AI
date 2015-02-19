@@ -16,9 +16,7 @@ public class View extends JPanel implements Observer {
 
     private static final long serialVersionUID = 1L;
 
-    /** Constants **/
-    private final int WIDTH = 320;
-    private final int HEIGHT = 340;
+    private static  final int TILE_SIZE = 10;
 
     private boolean inGame = false;
     private boolean pauseGame = false;
@@ -76,10 +74,10 @@ public class View extends JPanel implements Observer {
 
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(msgPaused, (WIDTH - metr.stringWidth(msgPaused)) / 2, HEIGHT / 2 - 40);
-        g.drawString(msgEscape, (WIDTH - metr.stringWidth(msgEscape)) / 2, HEIGHT / 2 - 20);
-        g.drawString(msgEnter, (WIDTH - metr.stringWidth(msgEnter)) / 2, HEIGHT / 2);
-        g.drawString(msgSpace, (WIDTH - metr.stringWidth(msgSpace)) / 2, HEIGHT / 2 + 20);
+        g.drawString(msgPaused, (Settings.FRAME_WIDTH - metr.stringWidth(msgPaused)) / 2, Settings.FRAME_HEIGHT / 2 - 40);
+        g.drawString(msgEscape, (Settings.FRAME_WIDTH - metr.stringWidth(msgEscape)) / 2, Settings.FRAME_HEIGHT / 2 - 20);
+        g.drawString(msgEnter, (Settings.FRAME_WIDTH - metr.stringWidth(msgEnter)) / 2, Settings.FRAME_HEIGHT / 2);
+        g.drawString(msgSpace, (Settings.FRAME_WIDTH - metr.stringWidth(msgSpace)) / 2, Settings.FRAME_HEIGHT / 2 + 20);
 
     }
 
@@ -94,9 +92,9 @@ public class View extends JPanel implements Observer {
 
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(msg, (WIDTH - metric.stringWidth(msg)) / 2, HEIGHT / 2 - 20);
-        g.drawString(replay, (WIDTH - metric.stringWidth(replay)) / 2, HEIGHT / 2);
-        g.drawString(quitMsg, (WIDTH - metric.stringWidth(quitMsg)) / 2, HEIGHT / 2 + 20);
+        g.drawString(msg, (Settings.FRAME_WIDTH - metric.stringWidth(msg)) / 2, Settings.FRAME_HEIGHT / 2 - 20);
+        g.drawString(replay, (Settings.FRAME_WIDTH - metric.stringWidth(replay)) / 2, Settings.FRAME_HEIGHT / 2);
+        g.drawString(quitMsg, (Settings.FRAME_WIDTH - metric.stringWidth(quitMsg)) / 2, Settings.FRAME_HEIGHT / 2 + 20);
     }
 
     @Override
@@ -104,15 +102,15 @@ public class View extends JPanel implements Observer {
         super.paint(g);
 
         if (inGame) {
-            g.drawImage(apple, apple_x, apple_y, this);
+            g.drawImage(apple, apple_x * TILE_SIZE, apple_y * TILE_SIZE, this);
 
             for (int i = 0; i < snake_x.length; i++) {
-                g.drawImage(dot, snake_x[i], snake_y[i], this);
+                g.drawImage(dot, snake_x[i] * TILE_SIZE, snake_y[i] * TILE_SIZE, this);
             }
 
 
             for (int i = 0; i < obstacles_x.length; i++) {
-                g.drawImage(obstacle, obstacles_x[i], obstacles_y[i], this);
+                g.drawImage(obstacle, obstacles_x[i] * TILE_SIZE, obstacles_y[i] * TILE_SIZE, this);
             }
 
             Toolkit.getDefaultToolkit().sync();

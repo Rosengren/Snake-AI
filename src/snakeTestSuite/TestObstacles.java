@@ -10,10 +10,8 @@ import org.junit.*;
 
 public class TestObstacles {
 
-    private static final int DEFAULT_OBSTACLE_SIZE = 10;
-    private static final int CUSTOM_OBSTACLE_SIZE = 20;
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 500;
+    private static final int WIDTH = 50;
+    private static final int HEIGHT = 50;
 
     private static final int CUSTOM_OBSTACLE_X = 10;
     private static final int CUSTOM_OBSTACLE_Y = 20;
@@ -26,23 +24,15 @@ public class TestObstacles {
     }
 
     @Test
-    public void testObstacleSize() {
-
-        assertEquals("Obstacle should have default size: " + DEFAULT_OBSTACLE_SIZE + ".", DEFAULT_OBSTACLE_SIZE, obstacles.getPerimeterSize());
-        obstacles = new Obstacles(CUSTOM_OBSTACLE_SIZE);
-        assertEquals("Obstacle should have custom size: " + CUSTOM_OBSTACLE_SIZE + ".", CUSTOM_OBSTACLE_SIZE, obstacles.getPerimeterSize());
-    }
-
-    @Test
     public void testPerimeterGeneration() {
 
         obstacles.generatePerimeter(WIDTH, HEIGHT);
-        int totalObstacles = WIDTH / DEFAULT_OBSTACLE_SIZE * 2 + HEIGHT / DEFAULT_OBSTACLE_SIZE * 2 + 4;
+        int totalObstacles = WIDTH * 2 + HEIGHT * 2 + 4;
 
         int[] xCoordinates = obstacles.getXCoordinates();
         int[] yCoordinates = obstacles.getYCoordinates();
 
-        assertEquals("There should be a total of " + totalObstacles + " coordinates.", 0, xCoordinates[totalObstacles + 1]);
+        assertEquals("There should be a total of " + totalObstacles + " x coordinates.", 0, xCoordinates[totalObstacles + 1]);
         assertEquals("There should be a total of " + totalObstacles + " y coordinates.", 0, yCoordinates[totalObstacles + 1]);
     }
 

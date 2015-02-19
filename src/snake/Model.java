@@ -139,6 +139,7 @@ public class Model extends Observable {
         int[][] layout = new int[width][height];
 
         int[] snakeCoordinates = snake.getHeadCoordinates();
+
         int xSnake = snakeCoordinates[0];
         int ySnake = snakeCoordinates[1];
         layout[xSnake][ySnake] = 1;
@@ -146,18 +147,15 @@ public class Model extends Observable {
         int[] xObstacles = obstacles.getXCoordinates();
         int[] yObstacles = obstacles.getYCoordinates();
 
-        System.out.println("w: " + width + ", h: " + height);
-        System.out.println("x: " + xObstacles.length + ". y: " + yObstacles.length + ". size: " + obstacles.getNumberOfObstacles());
-        System.out.println("xx: " + xObstacles[10]);
-        for (int i = 0; i < obstacles.getNumberOfObstacles() - 1; i++) {
-//            layout[xObstacles[i] / dotSize][yObstacles[i] / dotSize] = 2;
-            System.out.println("x: " + xObstacles[i] + " y: " + yObstacles[i]);
-        }
+        for (int i = 0; i < obstacles.getNumberOfObstacles(); i++)
+            layout[xObstacles[i]][yObstacles[i]] = 2;
+
 
         int xApple = apple.getXCoordinate();
         int yApple = apple.getYCoordinate();
 
         layout[xApple][yApple] = 3;
+
         return layout;
     }
 
