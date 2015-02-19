@@ -5,18 +5,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import javax.swing.Timer;
-
-
 public class Controller implements ActionListener {
-
-    private static final int DELAY = 50;
-
-    private Timer timer;
 
     private Model model;
     private TAdapter keyPress;
-
 
     public Controller(Model model) {
         this.model = model;
@@ -30,16 +22,20 @@ public class Controller implements ActionListener {
 
     public void initGame() {
         model.initGame();
-        setupTimer();
         model.update();
     }
 
+    private void playAI() {
+        System.out.println("Running AI");
+        Direction[] moves = model.runAI();
 
-    private void setupTimer() {
-        timer = new Timer(DELAY, this);
-        timer.start();
+        for (Direction dir : moves) {
+            System.out.println("Direction: " + dir);
+            model.moveSnake(dir);
+            model.update();
+        }
+
     }
-
 
     private class TAdapter extends KeyAdapter {
 
@@ -75,8 +71,7 @@ public class Controller implements ActionListener {
                     model.pauseGame();
                     break;
                 case KeyEvent.VK_N:
-                    System.out.println("Running AI");
-                    model.runAI();
+                    playAI();
                     break;
                 default:
                     break;
@@ -88,7 +83,7 @@ public class Controller implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
-        //model.update();
+        model.update();
     }
 
 }

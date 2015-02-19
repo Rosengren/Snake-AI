@@ -36,13 +36,17 @@ public class Model extends Observable {
     public void initGame() {
 
         score = 0;
-        snake.initialize();
-        obstacles.generatePerimeter(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
+        resetSnake();
         setChanged();
         notifyObservers("ingame");
         inGame = true;
         endGame = false;
         pauseGame = false;
+    }
+
+    public void resetSnake() {
+        snake.initialize();
+        obstacles.generatePerimeter(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
     }
 
     public void restartGame() {
@@ -72,6 +76,7 @@ public class Model extends Observable {
     private void endGame() {
         setChanged();
         notifyObservers("endgame");
+//        resetSnake();
         inGame = false;
         endGame = true;
     }
@@ -93,8 +98,8 @@ public class Model extends Observable {
 
     public void checkCollision() {
 
-        if (snake.checkWallCollision(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT) ||
-                snake.checkSnakeCollision() || obstacles.checkCollision(snake.getHeadCoordinates())) {
+        if (snake.checkWallCollision(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT) || // snake.checkSnakeCollision() ||
+             obstacles.checkCollision(snake.getHeadCoordinates())) {
             endGame();
         }
 
@@ -160,20 +165,8 @@ public class Model extends Observable {
     }
 
 
-    public void runAI() {
+    public Direction[] runAI() {
         AIContext ai = new AIContext(new BreadthFirstSearch());
-        ai.getPath(getBoardLayout(), snake.getDirection(), snake.getHeadCoordinates());
-
-        int[][] bl = getBoardLayout();
-        String result = "";
-        for (int i = 0; i < bl.length; i++) {
-            for (int j = 0; j < bl[0].length; j++) {
-                result += bl[i][j] + " ";
-            }
-            result += "\n";
-        }
-
-        System.out.println(result);
-
+        return ai.getPath(getBoardLayout(), snake.getDirection(), snake.getHeadCoordinates());
     }
 }

@@ -8,7 +8,7 @@ public class BreadthFirstSearch implements AIStrategy {
 
     private static final int VISITED = -1;
     private static final int SNAKE = 1;
-    private static final int PERIMETER = 2;
+    private static final int OBSTACLE = 2;
     private static final int APPLE = 3;
 
     // TODO: handle directions that the snake cannot move in
@@ -19,9 +19,8 @@ public class BreadthFirstSearch implements AIStrategy {
         Queue<int[]> frontier = new LinkedList<int[]>();
         frontier.add(snakeHead);
 
-        ArrayList<int[]> came_from = new ArrayList<int[]>();
-        came_from.add(snakeHead);
-
+        Map<String, int[]> came_from = new HashMap<String, int[]>();
+        came_from.put(coordinatesToString(snakeHead), snakeHead);
 
         int[] current = new int[] {0, 0};
         while (!frontier.isEmpty()) {
@@ -32,15 +31,40 @@ public class BreadthFirstSearch implements AIStrategy {
 
             for (int[] neighbor : getNeighbors(current, boardLayout)) {
                 if (notVisited(boardLayout, neighbor) && notObstacle(boardLayout, neighbor)) {
-                    frontier.add(neighbor);
-                    came_from.add(neighbor);
+                    if (!came_from.containsKey(coordinatesToString(neighbor))) {
+                        frontier.add(neighbor);
+                        came_from.put(coordinatesToString(neighbor), current);
+                    }
                 }
             }
             setVisited(boardLayout, current);
         }
 
         System.out.println("Found Apple at " + current[0] + ", " + current[1] + " " + boardLayout[current[0]][current[1]]);
-        return null;
+        ArrayList<int[]> shortestPath = reconstructShortestPath(current, snakeHead, came_from);
+
+        String result = "";
+        for (int i = 0; i < shortestPath.size(); i++) {
+            int[] p = shortestPath.get(i);
+            result += "[" + p[0] + "," + p[1] + "] ";
+        }
+
+
+        System.out.println("Shortest Path: " + result);
+
+        printDirections(getDirectionPath(shortestPath));
+
+        return getDirectionPath(shortestPath);
+
+    }
+
+    private void printDirections(Direction[] dir) {
+        String result = "";
+        for (int i = 0; i < dir.length; i++) {
+            result += dir[i] + " ";
+        }
+
+        System.out.println("Directions: " + result);
     }
 
     private void printBoard(int[][] boardLayout) {
@@ -55,6 +79,10 @@ public class BreadthFirstSearch implements AIStrategy {
         System.out.println(result);
     }
 
+    private String coordinatesToString(int[] coordinates) {
+        return coordinates[0] + "," + coordinates[1];
+    }
+
     private boolean notVisited(int[][] boardLayout, int[] coordinates) {
         return boardLayout[coordinates[0]][coordinates[1]] != VISITED;
     }
@@ -64,7 +92,7 @@ public class BreadthFirstSearch implements AIStrategy {
     }
 
     private boolean notObstacle(int[][] boardLayout, int[] coordinates) {
-        return boardLayout[coordinates[0]][coordinates[1]] != PERIMETER;
+        return boardLayout[coordinates[0]][coordinates[1]] != OBSTACLE;
     }
 
     private boolean isAppleCoordinates(int[][] boardLayout, int[] coordinates) {
@@ -72,21 +100,23 @@ public class BreadthFirstSearch implements AIStrategy {
     }
 
 
-    private ArrayList<int[]> reconstructShortestPath(int[] goal, int[] start) {
+    private ArrayList<int[]> reconstructShortestPath(int[] goal, int[] start, Map came_from) {
         int[] current = goal;
 
         ArrayList<int[]> path = new ArrayList<int[]>();
+        path.add(goal);
 
         while (current[0] != start[0] || current[1] != start[1]) {
+            current = (int[])came_from.get(coordinatesToString(current));
             path.add(current);
         }
 
         return path;
     }
 
-    private ArrayList<Direction> getDirectionPath(ArrayList<int[]> path) {
+    private Direction[] getDirectionPath(ArrayList<int[]> path) {
 
-        ArrayList<Direction> directionPath = new ArrayList<Direction>();
+        Direction[] directionPath = new Direction[path.size() - 1];
 
         int[] previous = path.get(0);
 
@@ -96,13 +126,13 @@ public class BreadthFirstSearch implements AIStrategy {
             current = path.get(i);
 
             if (current[0] > previous[0]) {
-                directionPath.add(Direction.RIGHT);
+                directionPath[i - 1] = Direction.LEFT;
             } else if (current[0] < previous[0]) {
-                directionPath.add(Direction.LEFT);
+                directionPath[i - 1] = Direction.RIGHT;
             } else if (current[1] > previous[1]) {
-                directionPath.add(Direction.DOWN);
+                directionPath[i - 1] = Direction.UP;
             } else if (current[1] < previous[1]) {
-                directionPath.add(Direction.UP);
+                directionPath[i - 1] = Direction.DOWN;
             }
         }
 
@@ -114,21 +144,17 @@ public class BreadthFirstSearch implements AIStrategy {
 
         ArrayList<int[]> result = new ArrayList<int[]>();
 
-        if (current[0] != 0) {
+        if (current[0] != 0)
             result.add(new int[]{current[0] - 1, current[1]});
-        }
 
-        if (current[0] != board.length - 1) {
+        if (current[0] != board.length - 1)
             result.add(new int[]{current[0] + 1, current[1]});
-        }
 
-        if (current[1] != 0) {
+        if (current[1] != 0)
             result.add(new int[]{current[0], current[1] - 1});
-        }
 
-        if (current[1] != board[0].length) {
+        if (current[1] != board[0].length)
             result.add(new int[]{current[0], current[1] + 1});
-        }
 
         return result;
     }
