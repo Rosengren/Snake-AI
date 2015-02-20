@@ -35,7 +35,7 @@ public class AStarTraversal extends AbstractStrategy implements AIStrategy {
 //              came_from[next] = current
 
     @Override
-    public Direction[] getPath(int[][] boardLayout, int[] snakeHead) {
+    public Direction[] getPath(int[][] boardLayout, int[] snakeHead, int[] goal) {
         Queue<int[]> frontier = new PriorityQueue<int[]>();
         frontier.add(snakeHead); // TODO: make this a priority thing
 //        frontier.

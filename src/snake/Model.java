@@ -165,6 +165,6 @@ public class Model extends Observable {
 
 
     public Direction[] runAI(AIContext ai) {
-        return ai.getPath(getBoardLayout(), snake.getHeadCoordinates());
+        return ai.getPath(getBoardLayout(), snake.getHeadCoordinates(), apple.getCoordinates());
     }
 }

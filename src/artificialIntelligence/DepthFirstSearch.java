@@ -10,7 +10,7 @@ public class DepthFirstSearch extends AbstractStrategy implements AIStrategy {
     private List<int[]> path;
 
     @Override
-    public Direction[] getPath(int[][] boardLayout, int[] snakeHead) {
+    public Direction[] getPath(int[][] boardLayout, int[] snakeHead, int[] goal) {
         path = new ArrayList<int[]>();
         int[][] visited = new int[boardLayout.length][boardLayout[0].length];
         depthFirstSearch(boardLayout, visited, snakeHead);

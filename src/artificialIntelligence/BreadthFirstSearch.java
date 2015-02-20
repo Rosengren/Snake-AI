@@ -7,7 +7,7 @@ import java.util.*;
 public class BreadthFirstSearch extends AbstractStrategy implements AIStrategy {
 
     @Override
-    public Direction[] getPath(int[][] boardLayout, int[] snakeHead) {
+    public Direction[] getPath(int[][] boardLayout, int[] snakeHead, int[] goal) {
 
         Queue<int[]> frontier = new LinkedList<int[]>();
         frontier.add(snakeHead);

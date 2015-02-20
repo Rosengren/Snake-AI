@@ -4,6 +4,6 @@ import snake.*;
 
 interface AIStrategy {
 
-    public Direction[] getPath(int[][] boardLayout, int[] snakeHead);
+    public Direction[] getPath(int[][] boardLayout, int[] snakeHead, int[] goal);
 
 }
