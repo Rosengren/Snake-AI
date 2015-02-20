@@ -34,10 +34,10 @@ public class BreadthFirstSearch extends AbstractStrategy implements AIStrategy {
         }
 
         ArrayList<int[]> shortestPath = reconstructShortestPath(current, snakeHead, came_from);
-
         return getDirectionPath(shortestPath);
 
     }
+
 
     private ArrayList<int[]> reconstructShortestPath(int[] goal, int[] start, Map came_from) {
         int[] current = goal;
@@ -52,5 +52,4 @@ public class BreadthFirstSearch extends AbstractStrategy implements AIStrategy {
 
         return path;
     }
-
 }

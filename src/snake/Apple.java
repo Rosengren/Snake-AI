@@ -11,7 +11,7 @@ public class Apple {
     private int width;
 
     public Apple() {
-        generateNewCoordinates();
+//        generateNewCoordinates();
         height = -1;
         width = -1;
     }
@@ -22,13 +22,12 @@ public class Apple {
     }
 
 
-    // TODO: make sure apple is not behind an obstacle
-    public void generateNewCoordinates() {
+    public void generateNewCoordinates(int[] xObstacles, int[] yObstacles) {
 
         do {
             xCoordinate = generateCoordinate();
             yCoordinate = generateCoordinate();
-        } while (isOutsidePerimeter(xCoordinate, yCoordinate));
+        } while (isBehindObstacle(xCoordinate, yCoordinate, xObstacles, yObstacles));
     }
 
 
@@ -37,8 +36,12 @@ public class Apple {
     }
 
 
-    private boolean isOutsidePerimeter(int x, int y) {
-        return (x == 0 || x == width || y == 0 || y == height);
+    private boolean isBehindObstacle(int x, int y, int[] xObstacles, int[] yObstacles) {
+        if (xObstacles.length != yObstacles.length) return false;
+        for (int i = 0; i < xObstacles.length; i++)
+            if (x == xObstacles[i] && y == yObstacles[i])
+                return true;
+        return false;
     }
 
 

@@ -25,6 +25,7 @@ public class Model extends Observable {
         apple = new Apple();
         apple.setPerimeter(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
         obstacles = new Obstacles();
+        apple.generateNewCoordinates(obstacles.getXCoordinates(), obstacles.getYCoordinates());
         board = new Board(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
         endGame = false;
         pauseGame = false;
@@ -77,7 +78,7 @@ public class Model extends Observable {
     private void endGame() {
         setChanged();
         notifyObservers("endgame");
-//        resetSnake();
+        resetSnake();
         inGame = false;
         endGame = true;
     }
@@ -112,7 +113,7 @@ public class Model extends Observable {
 
     public void checkApple() {
         if (snake.checkCollision(apple.getXCoordinate(), apple.getYCoordinate())) {
-            apple.generateNewCoordinates();
+            apple.generateNewCoordinates(obstacles.getXCoordinates(), obstacles.getYCoordinates());
         }
     }
 

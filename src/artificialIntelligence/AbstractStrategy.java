@@ -92,4 +92,18 @@ public class AbstractStrategy {
         return coordinates[X] + "," + coordinates[Y];
     }
 
+
+    // TESTING METHODS
+
+    protected void printBoard(int[][] board) {
+        String result = "";
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                result += board[j][i] + " ";
+            }
+            result += "\n";
+        }
+        System.out.println(result);
+    }
+
 }

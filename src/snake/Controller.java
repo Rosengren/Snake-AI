@@ -48,15 +48,21 @@ public class Controller implements ActionListener {
             switch(key) {
                 case KeyEvent.VK_UP:
                     model.moveSnake(Direction.UP);
+                    model.update();
                     break;
                 case KeyEvent.VK_DOWN:
                     model.moveSnake(Direction.DOWN);
+                    model.update();
                     break;
                 case KeyEvent.VK_LEFT:
                     model.moveSnake(Direction.LEFT);
+
+                    model.update();
                     break;
                 case KeyEvent.VK_RIGHT:
                     model.moveSnake(Direction.RIGHT);
+
+                    model.update();
                     break;
                 case KeyEvent.VK_ENTER:
                     model.restartGame();
@@ -80,7 +86,6 @@ public class Controller implements ActionListener {
                     break;
             }
 
-            model.update();
         }
     }
 
