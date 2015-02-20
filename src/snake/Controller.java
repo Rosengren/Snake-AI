@@ -2,20 +2,27 @@ package snake;
 
 import artificialIntelligence.*;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Controller implements ActionListener {
 
+    private static final int DELAY = 50;
+    private Queue<Direction> queue;
 
+    private Timer timer;
     private Model model;
     private TAdapter keyPress;
 
     public Controller(Model model) {
         this.model = model;
         keyPress = new TAdapter();
+        queue = new LinkedList<Direction>();
     }
 
 
@@ -27,14 +34,19 @@ public class Controller implements ActionListener {
     public void initGame() {
         model.initGame();
         model.update();
+        setTimer();
+    }
+
+    private void setTimer() {
+        timer = new Timer(DELAY, this);
+        timer.start();
     }
 
 
     private void playAI(AIContext ai) {
         Direction[] moves = model.runAI(ai);
         for (Direction dir : moves) {
-            model.moveSnake(dir);
-            model.update();
+            queue.add(dir);
         }
     }
 
@@ -93,7 +105,10 @@ public class Controller implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
-        model.update();
+        if (!queue.isEmpty()) {
+            model.moveSnake(queue.remove());
+            model.update();
+        }
     }
 
 }
