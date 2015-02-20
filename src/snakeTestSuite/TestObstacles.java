@@ -7,6 +7,7 @@ import org.junit.Test;
 import snake.Obstacles;
 
 import org.junit.*;
+import snake.Settings;
 
 public class TestObstacles {
 
@@ -44,7 +45,7 @@ public class TestObstacles {
 
     @Test
     public void testGenerateObstacle() {
-        obstacles.generateObstacle();
+        obstacles.generateObstacle(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
         assertEquals("There should only be 1 randomly generated obstacle.", 1, obstacles.getNumberOfObstacles());
     }
 

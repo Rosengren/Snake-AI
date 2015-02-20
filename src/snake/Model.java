@@ -1,15 +1,12 @@
 package snake;
 
 import artificialIntelligence.AIContext;
-import artificialIntelligence.AstarTraversal;
-import artificialIntelligence.DepthFirstSearch;
 
 import java.util.Observable;
 
 public class Model extends Observable {
 
     private Board board;
-
     private Snake snake;
     private Apple apple;
     private Obstacles obstacles;
@@ -19,8 +16,11 @@ public class Model extends Observable {
     private boolean inGame;
 
     public Model() {
+        initializeComponents();
+    }
 
-        // initialize snake
+
+    private void initializeComponents() {
         snake = new Snake();
         apple = new Apple();
         apple.setPerimeter(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
@@ -29,8 +29,8 @@ public class Model extends Observable {
         endGame = false;
         pauseGame = false;
         inGame = false;
-
     }
+
 
     public void initGame() {
 
@@ -42,14 +42,20 @@ public class Model extends Observable {
         pauseGame = false;
     }
 
+
     public void resetSnake() {
         snake.initialize();
         obstacles.generatePerimeter(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
+
+        for (int i = 0; i < 10; i++)
+            obstacles.generateObstacle(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
     }
+
 
     public void restartGame() {
         initGame();
     }
+
 
     public void pauseGame() {
         if (!endGame) {
@@ -67,17 +73,15 @@ public class Model extends Observable {
         }
     }
 
-    public void exitGame() {
-
-    }
 
     private void endGame() {
         setChanged();
         notifyObservers("endgame");
-        resetSnake();
+//        resetSnake();
         inGame = false;
         endGame = true;
     }
+
 
     public void update() {
 
@@ -86,13 +90,15 @@ public class Model extends Observable {
             checkApple();
             checkCollision();
 
-            // need to update view about:
             setChanged();
             notifyObservers(new int[][]{apple.getCoordinates(),
-                    snake.getXCoordinates(), snake.getYCoordinates(),
-                    obstacles.getXCoordinates(), obstacles.getYCoordinates()});
+                                        snake.getXCoordinates(),
+                                        snake.getYCoordinates(),
+                                        obstacles.getXCoordinates(),
+                                        obstacles.getYCoordinates()});
         }
     }
+
 
     public void checkCollision() {
 
@@ -103,19 +109,23 @@ public class Model extends Observable {
 
     }
 
+
     public void checkApple() {
         if (snake.checkCollision(apple.getXCoordinate(), apple.getYCoordinate())) {
             apple.generateNewCoordinates();
         }
     }
 
+
     public void moveSnake(Direction direction) {
         snake.setDirection(direction);
     }
 
+
     public Snake getSnake() {
         return snake;
     }
+
 
     public Board getBoard() {
         return board;
@@ -124,37 +134,36 @@ public class Model extends Observable {
 
     public int[][] getBoardLayout() {
 
-        int height = Settings.BOARD_HEIGHT;
-        int width = Settings.BOARD_WIDTH;
-
-        int[][] layout = new int[width][height];
-
-        int[] xSnake = snake.getXCoordinates();
-        int[] ySnake = snake.getYCoordinates();
-        for (int i = 0; i < xSnake.length; i++) {
-            layout[xSnake[i]][ySnake[i]] = 1;
-        }
-
-        int[] xObstacles = obstacles.getXCoordinates();
-        int[] yObstacles = obstacles.getYCoordinates();
-
-        for (int i = 0; i < obstacles.getNumberOfObstacles(); i++)
-            layout[xObstacles[i]][yObstacles[i]] = 2;
-
-
-        int xApple = apple.getXCoordinate();
-        int yApple = apple.getYCoordinate();
-
-        layout[xApple][yApple] = 3;
-
+        int[][] layout = new int[Settings.BOARD_WIDTH][Settings.BOARD_HEIGHT];
+        addSnakeToBoardLayout(layout);
+        addObstaclesToBoardLayout(layout);
+        addAppleToBoardLayout(layout);
         return layout;
     }
 
 
-    public Direction[] runAI() {
-//        AIContext ai = new AIContext(new BreadthFirstSearch());
-//        AIContext ai = new AIContext(new DepthFirstSearch());
-        AIContext ai = new AIContext(new AstarTraversal());
+    private void addSnakeToBoardLayout(int[][] board) {
+        int[] xSnake = snake.getXCoordinates();
+        int[] ySnake = snake.getYCoordinates();
+        for (int i = 0; i < xSnake.length; i++)
+            board[xSnake[i]][ySnake[i]] = Settings.SNAKE;
+    }
+
+
+    private void addObstaclesToBoardLayout(int[][] board) {
+        int[] xObstacles = obstacles.getXCoordinates();
+        int[] yObstacles = obstacles.getYCoordinates();
+        for (int i = 0; i < obstacles.getNumberOfObstacles(); i++)
+            board[xObstacles[i]][yObstacles[i]] = Settings.OBSTACLE;
+    }
+
+
+    private void addAppleToBoardLayout(int[][] board) {
+        board[apple.getXCoordinate()][apple.getYCoordinate()] = Settings.APPLE;
+    }
+
+
+    public Direction[] runAI(AIContext ai) {
         return ai.getPath(getBoardLayout(), snake.getHeadCoordinates());
     }
 }

@@ -4,16 +4,51 @@ import snake.*;
 
 import java.util.*;
 
-public class AstarTraversal implements AIStrategy {
+public class AStarTraversal extends AbstractStrategy implements AIStrategy {
+
+//    TODO:
+//    Quickly get the location of the goal and use that
+//    Use basic heuristic
+//    Use Second heuristic
+//    Average out heuristics
+
+    private static final int DISTANCE_BETWEEN_SQUARES = 1;
+//    frontier = PriorityQueue()
+//    frontier.put(start, 0)
+//    came_from = {}
+//    cost_so_far = {}
+//    came_from[start] = None
+//    cost_so_far[start] = 0
+//
+//    while not frontier.empty():
+//      current = frontier.get()
+//
+//      if current == goal:
+//          break
+//
+//      for next in graph.neighbors(current):
+//          new_cost = cost_so_far[current] + graph.cost(current, next)
+//          if next not in cost_so_far or new_cost < cost_so_far[next]:
+//              cost_so_far[next] = new_cost
+//              priority = new_cost + heuristic(goal, next)
+//              frontier.put(next, priority)
+//              came_from[next] = current
 
     @Override
     public Direction[] getPath(int[][] boardLayout, int[] snakeHead) {
-        Queue<int[]> frontier = new LinkedList<int[]>();
-        frontier.add(snakeHead);
+        Queue<int[]> frontier = new PriorityQueue<int[]>();
+        frontier.add(snakeHead); // TODO: make this a priority thing
+//        frontier.
+
 
         Map<String, int[]> came_from = new HashMap<String, int[]>();
-        came_from.put(coordinatesToString(snakeHead), snakeHead);
+        Map<String, Integer> cost_so_far = new HashMap<String, Integer>();
 
+        came_from.put(coordinatesToString(snakeHead), snakeHead);
+        cost_so_far.put(coordinatesToString(snakeHead), 0);
+
+        int new_cost;
+        int priority;
         int[] current = new int[] {0, 0};
         while (!frontier.isEmpty()) {
             current = frontier.remove();
@@ -22,8 +57,11 @@ public class AstarTraversal implements AIStrategy {
             }
 
             for (int[] neighbor : getNeighbors(current, boardLayout)) {
+                new_cost = cost_so_far.get(current) + DISTANCE_BETWEEN_SQUARES;
                 if (notVisited(boardLayout, neighbor) && notObstacle(boardLayout, neighbor) && notSnake(boardLayout, neighbor)) {
-                    if (!came_from.containsKey(coordinatesToString(neighbor))) {
+                    if (!cost_so_far.containsKey(coordinatesToString(neighbor)) || new_cost < cost_so_far.get(neighbor)) {
+                        cost_so_far.put(coordinatesToString(neighbor), new_cost);
+//                        priority = new_cost + heuristic();
                         frontier.add(neighbor);
                         came_from.put(coordinatesToString(neighbor), current);
                     }
@@ -36,32 +74,6 @@ public class AstarTraversal implements AIStrategy {
 
         return getDirectionPath(shortestPath);
     }
-
-    private String coordinatesToString(int[] coordinates) {
-        return coordinates[0] + "," + coordinates[1];
-    }
-
-
-    private boolean notSnake(int[][] boardLayout, int[] coordinates) {
-        return boardLayout[coordinates[0]][coordinates[1]] != SNAKE;
-    }
-
-    private boolean notVisited(int[][] boardLayout, int[] coordinates) {
-        return boardLayout[coordinates[0]][coordinates[1]] != VISITED;
-    }
-
-    private void setVisited(int[][] boardLayout, int[] coordinates) {
-        boardLayout[coordinates[0]][coordinates[1]] = VISITED;
-    }
-
-    private boolean notObstacle(int[][] boardLayout, int[] coordinates) {
-        return boardLayout[coordinates[0]][coordinates[1]] != OBSTACLE;
-    }
-
-    private boolean isAppleCoordinates(int[][] boardLayout, int[] coordinates) {
-        return boardLayout[coordinates[0]][coordinates[1]] == APPLE;
-    }
-
 
     private ArrayList<int[]> reconstructShortestPath(int[] goal, int[] start, Map came_from) {
         int[] current = goal;
@@ -77,56 +89,12 @@ public class AstarTraversal implements AIStrategy {
         return path;
     }
 
-    private Direction[] getDirectionPath(ArrayList<int[]> path) {
 
-        Direction[] directionPath = new Direction[path.size() - 1];
-
-        int[] previous = path.get(0);
-        int[] current;
-
-        for (int i = 1; i < path.size(); i++) {
-            current = path.get(i);
-
-            directionPath[i - 1] = getDirection(current, previous);
-            previous = path.get(i);
-        }
-
-        return directionPath;
+    // TODO: create separate object for heuristics maybe (strategy pattern)
+    private int heuristic(int[] current, int[] goal) {
+        return 1;
     }
 
-    private Direction getDirection(int[] current, int[] previous) {
-
-        if (current[0] > previous[0]) {
-            return Direction.RIGHT;
-        }
-
-        else if (current[0] < previous[0])
-            return Direction.LEFT;
-        else if (current[1] > previous[1])
-            return Direction.DOWN;
-
-        return Direction.UP;
-    }
-
-    private ArrayList<int[]> getNeighbors(int[] current, int[][] board) {
-
-
-        ArrayList<int[]> result = new ArrayList<int[]>();
-
-        if (current[0] != 0)
-            result.add(new int[]{current[0] - 1, current[1]});
-
-        if (current[0] != board.length - 1)
-            result.add(new int[]{current[0] + 1, current[1]});
-
-        if (current[1] != 0)
-            result.add(new int[]{current[0], current[1] - 1});
-
-        if (current[1] != board[0].length)
-            result.add(new int[]{current[0], current[1] + 1});
-
-        return result;
-    }
 }
 
 

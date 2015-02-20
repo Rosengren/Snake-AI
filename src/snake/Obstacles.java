@@ -3,7 +3,6 @@ package snake;
 public class Obstacles {
 
     private static final int MAX_OBSTACLES = 400;
-    private static final int SEED_VALUE = 37;
 
     private int[] xCoordinates;
     private int[] yCoordinates;
@@ -47,13 +46,15 @@ public class Obstacles {
     }
 
 
-    public void generateObstacle() {
+    public void generateObstacle(int width, int height) {
 
-        int x = (int)(Math.random() * SEED_VALUE);
-        int y = (int)(Math.random() * SEED_VALUE);
+        int x = (int)(Math.random() * width);
+        int y = (int)(Math.random() * height);
 
         if (!addObstacle(x, y))
-            generateObstacle();
+            generateObstacle(width, height);
+
+        numberOfObstacles++;
     }
 
     public boolean addObstacle(int x, int y) {
