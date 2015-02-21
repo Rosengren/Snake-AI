@@ -21,7 +21,7 @@ public class AStarTraversal extends AbstractStrategy implements AIStrategy {
         cost_so_far.put(coordinatesToString(start), 0);
 
         int new_cost;
-        int priority;
+        double priority;
         int[] current = new int[] {0, 0};
         while (!frontier.isEmpty()) {
             current = frontier.dequeue();
@@ -65,9 +65,15 @@ public class AStarTraversal extends AbstractStrategy implements AIStrategy {
 
 
     // TODO: create separate object for heuristics maybe (strategy pattern)
-    private int heuristic(int[] a, int[] b) {
+    private double heuristicManhattanDistance(int[] a, int[] b) {
         // Manhattan distance on a square grid
-        return Math.abs(a[X] - b[X]) + Math.abs(a[Y] - b[Y]);
+        int dx = Math.abs(a[X] - b[X]);
+        int dy = Math.abs(a[Y] - b[Y]);
+        return dy + dx;
+    }
+
+    private double heuristic(int[] a, int[] b) {
+        return heuristicManhattanDistance(a, b) * (1 + 0.001);
     }
 
 }

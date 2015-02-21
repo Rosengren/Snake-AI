@@ -22,6 +22,7 @@ public class DepthFirstSearch extends AbstractStrategy implements AIStrategy {
     private boolean depthFirstSearch(int[][] board, int[][] visited, int[] current) {
 
         setVisited(visited, current);
+        printBoard(board);
         if (isAppleCoordinates(board, current)) return true;
 
         for (int[] neighbor : getNeighbors(current, board)) {
