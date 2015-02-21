@@ -18,6 +18,7 @@ public class BreadthFirstSearch extends AbstractStrategy implements AIStrategy {
         int[] current = new int[] {0, 0};
         while (!frontier.isEmpty()) {
             current = frontier.remove();
+            printBoard(boardLayout);
             if (isAppleCoordinates(boardLayout, current)) {
                 break;
             }

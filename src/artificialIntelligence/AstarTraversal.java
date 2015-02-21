@@ -6,63 +6,37 @@ import java.util.*;
 
 public class AStarTraversal extends AbstractStrategy implements AIStrategy {
 
-//    TODO:
-//    Quickly get the location of the goal and use that
-//    Use basic heuristic
-//    Use Second heuristic
-//    Average out heuristics
-
     private static final int DISTANCE_BETWEEN_SQUARES = 1;
-//    frontier = PriorityQueue()
-//    frontier.put(start, 0)
-//    came_from = {}
-//    cost_so_far = {}
-//    came_from[start] = None
-//    cost_so_far[start] = 0
-//
-//    while not frontier.empty():
-//      current = frontier.get()
-//
-//      if current == goal:
-//          break
-//
-//      for next in graph.neighbors(current):
-//          new_cost = cost_so_far[current] + graph.cost(current, next)
-//          if next not in cost_so_far or new_cost < cost_so_far[next]:
-//              cost_so_far[next] = new_cost
-//              priority = new_cost + heuristic(goal, next)
-//              frontier.put(next, priority)
-//              came_from[next] = current
 
     @Override
-    public Direction[] getPath(int[][] boardLayout, int[] snakeHead, int[] goal) {
-        Queue<int[]> frontier = new PriorityQueue<int[]>();
-        frontier.add(snakeHead); // TODO: make this a priority thing
-//        frontier.
+    public Direction[] getPath(int[][] boardLayout, int[] start, int[] goal) {
+        PriorityQueue<int[]> frontier = new PriorityQueue<int[]>();
+        frontier.enqueue(start, 0);
 
 
         Map<String, int[]> came_from = new HashMap<String, int[]>();
         Map<String, Integer> cost_so_far = new HashMap<String, Integer>();
 
-        came_from.put(coordinatesToString(snakeHead), snakeHead);
-        cost_so_far.put(coordinatesToString(snakeHead), 0);
+        came_from.put(coordinatesToString(start), start);
+        cost_so_far.put(coordinatesToString(start), 0);
 
         int new_cost;
         int priority;
         int[] current = new int[] {0, 0};
         while (!frontier.isEmpty()) {
-            current = frontier.remove();
+            current = frontier.dequeue();
+            printBoard(boardLayout);
             if (isAppleCoordinates(boardLayout, current)) {
                 break;
             }
 
             for (int[] neighbor : getNeighbors(current, boardLayout)) {
-                new_cost = cost_so_far.get(current) + DISTANCE_BETWEEN_SQUARES;
+                new_cost = cost_so_far.get(coordinatesToString(current)) + DISTANCE_BETWEEN_SQUARES;
                 if (notVisited(boardLayout, neighbor) && notObstacle(boardLayout, neighbor) && notSnake(boardLayout, neighbor)) {
-                    if (!cost_so_far.containsKey(coordinatesToString(neighbor)) || new_cost < cost_so_far.get(neighbor)) {
+                    if (!cost_so_far.containsKey(coordinatesToString(neighbor)) || new_cost < cost_so_far.get(coordinatesToString(neighbor))) {
                         cost_so_far.put(coordinatesToString(neighbor), new_cost);
-//                        priority = new_cost + heuristic();
-                        frontier.add(neighbor);
+                        priority = new_cost + heuristic(current, goal);
+                        frontier.enqueue(neighbor, priority);
                         came_from.put(coordinatesToString(neighbor), current);
                     }
                 }
@@ -70,7 +44,7 @@ public class AStarTraversal extends AbstractStrategy implements AIStrategy {
             setVisited(boardLayout, current);
         }
 
-        ArrayList<int[]> shortestPath = reconstructShortestPath(current, snakeHead, came_from);
+        ArrayList<int[]> shortestPath = reconstructShortestPath(current, start, came_from);
 
         return getDirectionPath(shortestPath);
     }
@@ -91,8 +65,9 @@ public class AStarTraversal extends AbstractStrategy implements AIStrategy {
 
 
     // TODO: create separate object for heuristics maybe (strategy pattern)
-    private int heuristic(int[] current, int[] goal) {
-        return 1;
+    private int heuristic(int[] a, int[] b) {
+        // Manhattan distance on a square grid
+        return Math.abs(a[X] - b[X]) + Math.abs(a[Y] - b[Y]);
     }
 
 }

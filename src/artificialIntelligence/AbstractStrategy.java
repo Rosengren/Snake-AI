@@ -2,7 +2,9 @@ package artificialIntelligence;
 
 import snake.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 public class AbstractStrategy {
@@ -10,8 +12,18 @@ public class AbstractStrategy {
     protected static final int VISITED  = -1;
 
     /** Coordinates **/
-    private static final int X = 0;
-    private static final int Y = 1;
+    protected static final int X = 0;
+    protected static final int Y = 1;
+
+    private static final Map<Integer, String> replace;
+    static {
+        replace = new HashMap<Integer, String>();
+        replace.put(-1, "*");
+        replace.put(0, "-");
+        replace.put(1, "o");
+        replace.put(2, "=");
+        replace.put(3, "0");
+    }
 
 
     protected Direction getDirection(int[] current, int[] previous) {
@@ -98,9 +110,9 @@ public class AbstractStrategy {
     protected void printBoard(int[][] board) {
         String result = "";
         for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                result += board[j][i] + " ";
-            }
+            for (int j = 0; j < board[i].length; j++)
+                result += replace.get(board[j][i]) + " ";
+
             result += "\n";
         }
         System.out.println(result);
