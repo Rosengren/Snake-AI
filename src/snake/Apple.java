@@ -11,7 +11,6 @@ public class Apple {
     private int width;
 
     public Apple() {
-//        generateNewCoordinates();
         height = -1;
         width = -1;
     }

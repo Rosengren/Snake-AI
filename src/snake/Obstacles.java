@@ -2,7 +2,7 @@ package snake;
 
 public class Obstacles {
 
-    private static final int MAX_OBSTACLES = 400;
+    private static final int MAX_OBSTACLES = 1000;
 
     private int[] xCoordinates;
     private int[] yCoordinates;

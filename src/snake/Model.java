@@ -23,8 +23,8 @@ public class Model extends Observable {
     private void initializeComponents() {
         snake = new Snake();
         apple = new Apple();
-        apple.setPerimeter(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
         obstacles = new Obstacles();
+        apple.setPerimeter(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
         apple.generateNewCoordinates(obstacles.getXCoordinates(), obstacles.getYCoordinates());
         board = new Board(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
         endGame = false;
@@ -48,7 +48,7 @@ public class Model extends Observable {
         snake.initialize();
         obstacles.generatePerimeter(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < Settings.OBSTACLE_PERCENT_COVERAGE; i++)
             obstacles.generateObstacle(Settings.BOARD_WIDTH, Settings.BOARD_HEIGHT);
     }
 
