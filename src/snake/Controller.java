@@ -92,6 +92,12 @@ public class Controller implements ActionListener {
                 case KeyEvent.VK_5:
                     playAI(new AIContext(new AStarTraversal(Settings.ADMISSIBLE_HEURISTIC)));
                     return;
+                case KeyEvent.VK_6:
+                    playAI(new AIContext(new AStarTraversal(Settings.AVERAGE_HEURISTIC)));
+                    return;
+                case KeyEvent.VK_7:
+                    playAI(new AIContext(new AStarTraversal(Settings.AVERAGE_HEURISTIC_WITH_WEIGHT)));
+                    return;
                 default:
                     break;
             }

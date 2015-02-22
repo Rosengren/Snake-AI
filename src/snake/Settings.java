@@ -16,4 +16,6 @@ public final class Settings {
     public static final int MANHATTAN_DISTANCE = 0;
     public static final int WEIGHTED_MANHATTAN_DISTANCE = 1;
     public static final int ADMISSIBLE_HEURISTIC = 2;
+    public static final int AVERAGE_HEURISTIC = 3;
+    public static final int AVERAGE_HEURISTIC_WITH_WEIGHT = 4;
 }

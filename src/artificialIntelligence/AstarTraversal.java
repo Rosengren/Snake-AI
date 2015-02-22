@@ -87,6 +87,10 @@ public class AStarTraversal extends AbstractStrategy implements AIStrategy {
                     return weightedManhattanDistance(start, goal);
                 case Settings.ADMISSIBLE_HEURISTIC:
                     return admissible(start, goal);
+                case Settings.AVERAGE_HEURISTIC:
+                    return average(start, goal);
+                case Settings.AVERAGE_HEURISTIC_WITH_WEIGHT:
+                    return averageWithWeight(start, goal);
                 default:
                     return manhattanDistance(start, goal);
             }
@@ -111,6 +115,16 @@ public class AStarTraversal extends AbstractStrategy implements AIStrategy {
             dx *= dx;
             dy *= dy;
             return Math.sqrt(dx + dy);
+        }
+
+
+        private double average(int[] a, int[] b) {
+            return (manhattanDistance(a, b) + admissible(a, b)) / 2;
+        }
+
+
+        private double averageWithWeight(int[] a, int[] b) {
+            return (weightedManhattanDistance(a, b) + admissible(a, b)) / 2;
         }
 
     }
