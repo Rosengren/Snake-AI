@@ -7,6 +7,11 @@ import java.util.*;
 public class AStarTraversal extends AbstractStrategy implements AIStrategy {
 
     private static final int DISTANCE_BETWEEN_SQUARES = 1;
+    private Heuristic heuristic;
+
+    public AStarTraversal(int selectedHeuristic) {
+        heuristic = new Heuristic(selectedHeuristic);
+    }
 
     @Override
     public Direction[] getPath(int[][] boardLayout, int[] start, int[] goal) {
@@ -35,7 +40,7 @@ public class AStarTraversal extends AbstractStrategy implements AIStrategy {
                 if (notVisited(boardLayout, neighbor) && notObstacle(boardLayout, neighbor) && notSnake(boardLayout, neighbor)) {
                     if (!cost_so_far.containsKey(coordinatesToString(neighbor)) || new_cost < cost_so_far.get(coordinatesToString(neighbor))) {
                         cost_so_far.put(coordinatesToString(neighbor), new_cost);
-                        priority = new_cost + heuristic(current, goal);
+                        priority = new_cost + heuristic.calculate(current, goal);
                         frontier.enqueue(neighbor, priority);
                         came_from.put(coordinatesToString(neighbor), current);
                     }
@@ -64,18 +69,51 @@ public class AStarTraversal extends AbstractStrategy implements AIStrategy {
     }
 
 
-    // TODO: create separate object for heuristics maybe (strategy pattern)
-    private double heuristicManhattanDistance(int[] a, int[] b) {
-        // Manhattan distance on a square grid
-        int dx = Math.abs(a[X] - b[X]);
-        int dy = Math.abs(a[Y] - b[Y]);
-        return dy + dx;
-    }
+    private class Heuristic {
+        
+        private int selectedHeuristic;
 
-    private double heuristic(int[] a, int[] b) {
-        return heuristicManhattanDistance(a, b) * (1 + 0.001);
-    }
 
+        public Heuristic(int heuristic) {
+            selectedHeuristic = heuristic;
+        }
+
+
+        public double calculate(int[] start, int[] goal) {
+            switch (selectedHeuristic) {
+                case Settings.MANHATTAN_DISTANCE:
+                    return manhattanDistance(start, goal);
+                case Settings.WEIGHTED_MANHATTAN_DISTANCE:
+                    return weightedManhattanDistance(start, goal);
+                case Settings.ADMISSIBLE_HEURISTIC:
+                    return admissible(start, goal);
+                default:
+                    return manhattanDistance(start, goal);
+            }
+        }
+
+
+        private double manhattanDistance(int[] a, int[] b) {
+            int dx = Math.abs(a[X] - b[X]);
+            int dy = Math.abs(a[Y] - b[Y]);
+            return dy + dx;
+        }
+
+
+        private double weightedManhattanDistance(int[] a, int[] b) {
+            return manhattanDistance(a, b) * (1.001);
+        }
+
+
+        private double admissible(int[] a, int[] b) {
+            int dx = Math.abs(a[X] - b[X]);
+            int dy = Math.abs(a[Y] - b[Y]);
+            dx *= dx;
+            dy *= dy;
+            return Math.sqrt(dx + dy);
+        }
+
+    }
 }
 
 

@@ -13,4 +13,7 @@ public final class Settings {
     public static final int OBSTACLE =  2;
     public static final int APPLE    =  3;
 
+    public static final int MANHATTAN_DISTANCE = 0;
+    public static final int WEIGHTED_MANHATTAN_DISTANCE = 1;
+    public static final int ADMISSIBLE_HEURISTIC = 2;
 }

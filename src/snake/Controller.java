@@ -84,7 +84,13 @@ public class Controller implements ActionListener {
                     playAI(new AIContext(new DepthFirstSearch()));
                     return;
                 case KeyEvent.VK_3:
-                    playAI(new AIContext(new AStarTraversal()));
+                    playAI(new AIContext(new AStarTraversal(Settings.MANHATTAN_DISTANCE)));
+                    return;
+                case KeyEvent.VK_4:
+                    playAI(new AIContext(new AStarTraversal(Settings.WEIGHTED_MANHATTAN_DISTANCE)));
+                    return;
+                case KeyEvent.VK_5:
+                    playAI(new AIContext(new AStarTraversal(Settings.ADMISSIBLE_HEURISTIC)));
                     return;
                 default:
                     break;
