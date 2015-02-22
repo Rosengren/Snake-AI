@@ -45,7 +45,11 @@ public class Controller implements ActionListener {
 
 
     private void playAI(AIContext ai) {
+        long startTime = System.nanoTime();
         queue.addAll(Arrays.asList(model.runAI(ai)));
+        long endTime = System.nanoTime();
+        double elapsedTimeInSeconds = (endTime - startTime) / 1000000000.0; // 10^9
+        System.out.println("Runtime: " + elapsedTimeInSeconds + " seconds");
     }
 
 

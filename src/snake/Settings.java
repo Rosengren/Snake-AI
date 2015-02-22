@@ -6,7 +6,7 @@ public final class Settings {
     public static final int BOARD_HEIGHT = 30;
     public static final int SNAKE_STARTING_POSITION = 20;
 
-    public static final double OBSTACLE_PERCENT_COVERAGE = 0.15 * (BOARD_HEIGHT * BOARD_WIDTH);
+    public static final double OBSTACLE_PERCENT_COVERAGE = 0.05 * (BOARD_HEIGHT * BOARD_WIDTH);
 
     public static final int FRAME_WIDTH = 300;
     public static final int FRAME_HEIGHT = 320;
