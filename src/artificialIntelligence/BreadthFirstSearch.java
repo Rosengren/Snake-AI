@@ -24,7 +24,7 @@ public class BreadthFirstSearch extends AbstractStrategy implements AIStrategy {
             }
 
             for (int[] neighbor : getNeighbors(current, boardLayout)) {
-                if (notVisited(boardLayout, neighbor) && notObstacle(boardLayout, neighbor) && notSnake(boardLayout, neighbor)) {
+                if (validMove(boardLayout, boardLayout, neighbor)) {
                     if (!came_from.containsKey(coordinatesToString(neighbor))) {
                         frontier.add(neighbor);
                         came_from.put(coordinatesToString(neighbor), current);

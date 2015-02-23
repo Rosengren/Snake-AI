@@ -118,4 +118,11 @@ public class AbstractStrategy {
         System.out.println(result);
     }
 
+
+    protected boolean validMove(int[][] visited, int[][] board, int[] neighbor) {
+        return notVisited(visited, neighbor) &&
+                notSnake(board, neighbor) &&
+                notObstacle(board, neighbor);
+    }
+
 }

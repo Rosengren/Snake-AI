@@ -26,7 +26,7 @@ public class DepthFirstSearch extends AbstractStrategy implements AIStrategy {
         if (isAppleCoordinates(board, current)) return true;
 
         for (int[] neighbor : getNeighbors(current, board)) {
-            if (notVisited(visited, neighbor) && notSnake(board, neighbor) && notObstacle(board, neighbor)) {
+            if (validMove(visited, board, neighbor)) {
                 if (depthFirstSearch(board, visited, neighbor)) {
                     path.add(0, neighbor);
                     return true;

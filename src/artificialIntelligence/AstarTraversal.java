@@ -37,7 +37,7 @@ public class AStarTraversal extends AbstractStrategy implements AIStrategy {
 
             for (int[] neighbor : getNeighbors(current, boardLayout)) {
                 new_cost = cost_so_far.get(coordinatesToString(current)) + DISTANCE_BETWEEN_SQUARES;
-                if (notVisited(boardLayout, neighbor) && notObstacle(boardLayout, neighbor) && notSnake(boardLayout, neighbor)) {
+                if (validMove(boardLayout, boardLayout, neighbor)) {
                     if (!cost_so_far.containsKey(coordinatesToString(neighbor)) || new_cost < cost_so_far.get(coordinatesToString(neighbor))) {
                         cost_so_far.put(coordinatesToString(neighbor), new_cost);
                         priority = new_cost + heuristic.calculate(current, goal);
