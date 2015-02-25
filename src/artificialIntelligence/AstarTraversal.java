@@ -83,14 +83,16 @@ public class AStarTraversal extends AbstractStrategy implements AIStrategy {
             switch (selectedHeuristic) {
                 case Settings.MANHATTAN_DISTANCE:
                     return manhattanDistance(start, goal);
-                case Settings.WEIGHTED_MANHATTAN_DISTANCE:
-                    return weightedManhattanDistance(start, goal);
-                case Settings.ADMISSIBLE_HEURISTIC:
-                    return admissible(start, goal);
+                case Settings.TIE_BREAKER_MANHATTAN_DISTANCE:
+                    return tieBreakerManhattanDistance(start, goal);
+                case Settings.DIAGONAL_DISTANCE_HEURISTIC:
+                    return diagonalDistance(start, goal);
                 case Settings.AVERAGE_HEURISTIC:
                     return average(start, goal);
-                case Settings.AVERAGE_HEURISTIC_WITH_WEIGHT:
+                case Settings.AVERAGE_HEURISTIC_WITH_TIE_BREAKER:
                     return averageWithWeight(start, goal);
+                case Settings.EUCLIDEAN_DISTANCE:
+                    return euclideanDistance(start, goal);
                 default:
                     return manhattanDistance(start, goal);
             }
@@ -104,27 +106,30 @@ public class AStarTraversal extends AbstractStrategy implements AIStrategy {
         }
 
 
-        private double weightedManhattanDistance(int[] a, int[] b) {
-            return manhattanDistance(a, b) * (1.001);
+        private double tieBreakerManhattanDistance(int[] a, int[] b) {
+            return manhattanDistance(a, b) * (1.001); // with Tie Breaker
         }
 
 
-        private double admissible(int[] a, int[] b) {
+        private double diagonalDistance(int[] a, int[] b) {
             int dx = Math.abs(a[X] - b[X]);
             int dy = Math.abs(a[Y] - b[Y]);
-            dx *= dx;
-            dy *= dy;
-            return Math.sqrt(dx + dy);
+            return Math.max(dx, dy);
         }
 
+        private double euclideanDistance(int[] a, int[] b) {
+            int dx = Math.abs(a[X] - b[X]);
+            int dy = Math.abs(a[Y] - b[Y]);
+            return Math.sqrt(dx * dx + dy * dy);
+        }
 
         private double average(int[] a, int[] b) {
-            return (manhattanDistance(a, b) + admissible(a, b)) / 2;
+            return (manhattanDistance(a, b) + diagonalDistance(a, b)) / 2;
         }
 
 
         private double averageWithWeight(int[] a, int[] b) {
-            return (weightedManhattanDistance(a, b) + admissible(a, b)) / 2;
+            return (tieBreakerManhattanDistance(a, b) + diagonalDistance(a, b)) / 2;
         }
 
     }

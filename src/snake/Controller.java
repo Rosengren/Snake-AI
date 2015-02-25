@@ -18,11 +18,13 @@ public class Controller implements ActionListener {
 
     private Model model;
     private TAdapter keyPress;
+    private boolean calculateAverage;
 
     public Controller(Model model) {
         this.model = model;
         keyPress = new TAdapter();
         queue = new LinkedList<Direction>();
+        calculateAverage = false;
     }
 
 
@@ -43,14 +45,38 @@ public class Controller implements ActionListener {
         timer.start();
     }
 
+    private void getAverage(AIContext ai) {
+
+        double count = 0;
+        for (int i = 0; i < Settings.NUMBER_OF_TRIAL_RUNS; i++) {
+            long startTime = System.nanoTime();
+            queue.addAll(Arrays.asList(model.runAI(ai)));
+            long endTime = System.nanoTime();
+            double elapsedTimeInSeconds = (endTime - startTime) / 1000000000.0; // 10^9
+            count += elapsedTimeInSeconds;
+            System.out.printf("Runtime: %f seconds\n", elapsedTimeInSeconds);
+            if (!queue.isEmpty()) {
+                model.moveSnake(queue.remove());
+            }
+        }
+
+        double average = count / Settings.NUMBER_OF_TRIAL_RUNS;
+        System.out.printf("Average Time: %f\n", average);
+    }
 
     private void playAI(AIContext ai) {
-        long startTime = System.nanoTime();
-        queue.addAll(Arrays.asList(model.runAI(ai)));
-        long endTime = System.nanoTime();
-        double elapsedTimeInSeconds = (endTime - startTime) / 1000000000.0; // 10^9
-        System.out.println("Runtime: " + elapsedTimeInSeconds + " seconds");
+
+        if (calculateAverage)
+            getAverage(ai);
+        else {
+            long startTime = System.nanoTime();
+            queue.addAll(Arrays.asList(model.runAI(ai)));
+            long endTime = System.nanoTime();
+            double elapsedTimeInSeconds = (endTime - startTime) / 1000000000.0; // 10^9
+            System.out.printf("Runtime: %f seconds\n", elapsedTimeInSeconds);
+        }
     }
+
 
 
     private class TAdapter extends KeyAdapter {
@@ -91,16 +117,23 @@ public class Controller implements ActionListener {
                     playAI(new AIContext(new AStarTraversal(Settings.MANHATTAN_DISTANCE)));
                     return;
                 case KeyEvent.VK_4:
-                    playAI(new AIContext(new AStarTraversal(Settings.WEIGHTED_MANHATTAN_DISTANCE)));
+                    playAI(new AIContext(new AStarTraversal(Settings.TIE_BREAKER_MANHATTAN_DISTANCE)));
                     return;
                 case KeyEvent.VK_5:
-                    playAI(new AIContext(new AStarTraversal(Settings.ADMISSIBLE_HEURISTIC)));
+                    playAI(new AIContext(new AStarTraversal(Settings.DIAGONAL_DISTANCE_HEURISTIC)));
                     return;
                 case KeyEvent.VK_6:
                     playAI(new AIContext(new AStarTraversal(Settings.AVERAGE_HEURISTIC)));
                     return;
                 case KeyEvent.VK_7:
-                    playAI(new AIContext(new AStarTraversal(Settings.AVERAGE_HEURISTIC_WITH_WEIGHT)));
+                    playAI(new AIContext(new AStarTraversal(Settings.AVERAGE_HEURISTIC_WITH_TIE_BREAKER)));
+                    return;
+                case KeyEvent.VK_8:
+                    playAI(new AIContext(new AStarTraversal(Settings.EUCLIDEAN_DISTANCE)));
+                    return;
+                case KeyEvent.VK_A:
+                    calculateAverage = !calculateAverage;
+                    queue = new LinkedList<Direction>();
                     return;
                 default:
                     break;
@@ -112,6 +145,8 @@ public class Controller implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        if (calculateAverage) return;
 
         if (!queue.isEmpty()) {
             model.moveSnake(queue.remove());
