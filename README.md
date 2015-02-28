@@ -1,6 +1,6 @@
-#Snake AI (Artificial Intelligence)
+#Snake Game AI
 
-Implementation of a snake game.
+Implementation of the classic snake game with path finding
 
 ###AI Strategies
 
